@@ -2073,6 +2073,253 @@ blockquote {
   justify-content: space-between;
 }
 
+/* Final whole-page theme pass. These rules intentionally override the legacy
+   palette below so every section uses the same calm library visual language. */
+html,
+body {
+  background: #f5f1e8;
+  color: #24333b;
+}
+
+body {
+  background-image: none;
+}
+
+.hero,
+.section,
+.catalog,
+.discounts,
+.features,
+.reviews {
+  background: #f5f1e8;
+}
+
+.hero {
+  border-bottom: 1px solid #ded6c9;
+}
+
+.hero-copy h1,
+.section-heading h2,
+.book-card h3,
+.feature-card h3,
+.discount-card h3,
+.book-info h2 {
+  color: #203c4d;
+}
+
+.hero-copy p,
+.book-card p,
+.feature-card p,
+.discount-card p,
+.discounts-intro,
+blockquote,
+.book-meta,
+.footer p {
+  color: #687276;
+}
+
+.hero-metrics li {
+  background: transparent;
+  border-bottom: 1px solid #d8d0c2;
+}
+
+.hero-metrics strong {
+  color: #2f686b;
+}
+
+.button.ghost {
+  background: transparent;
+  color: #2f686b;
+  border-color: #b9c7c2;
+}
+
+.button.ghost:hover,
+.button.ghost:focus-visible {
+  background: #e6eee9;
+  border-color: #2f686b;
+}
+
+.book-info .mini-tag,
+.feature-icon,
+.review-grid footer {
+  color: #2f686b;
+}
+
+.cover-label {
+  background: #203c4d;
+  color: #fffdf8;
+}
+
+.cover-inner {
+  background: rgba(255, 253, 248, 0.58);
+  border-color: rgba(32, 60, 77, 0.16);
+}
+
+.category-strip {
+  border-top: 1px solid #245356;
+  border-bottom: 1px solid #245356;
+}
+
+.catalog-toolbar {
+  gap: 1rem;
+}
+
+.filter-row {
+  gap: 0.45rem;
+}
+
+.product-grid,
+.feature-grid,
+.review-grid,
+.discount-grid {
+  gap: 1.25rem;
+}
+
+.book-badge {
+  background: #e6eee9;
+  color: #2f686b;
+}
+
+.book-meta {
+  border-top-color: #d8d0c2;
+}
+
+.quantity-button {
+  background: #e6eee9;
+  border-color: #b9c7c2;
+  color: #2f686b;
+}
+
+.quantity-button:hover {
+  background: #cbded7;
+}
+
+.feature-icon {
+  background: #e6eee9;
+}
+
+.review-grid blockquote {
+  background: #fffdf8;
+  border-color: #d8d0c2;
+  color: #24333b;
+}
+
+.discount-card {
+  background: #e6eee9;
+  border-color: #c6d5cf;
+}
+
+.discount-card-featured {
+  background: #fff3e5;
+  border-color: #e1c7a7;
+}
+
+.discount-label {
+  color: #2f686b;
+}
+
+.discount-amount {
+  color: #b9684d;
+}
+
+.footer {
+  background: #203c4d;
+  border-top-color: #c79b5b;
+}
+
+.footer,
+.footer .brand-name,
+.footer a {
+  color: #f5f1e8;
+}
+
+.footer p,
+.footer-links {
+  color: #cbd8d5;
+}
+
+.footer-links a:hover {
+  color: #f5f1e8;
+}
+
+.overlay {
+  background: rgba(32, 60, 77, 0.48);
+}
+
+.close-modal,
+.close-cart {
+  background: #e6eee9;
+  color: #203c4d;
+}
+
+.close-modal:hover,
+.close-cart:hover {
+  background: #cbded7;
+  color: #203c4d;
+}
+
+.auth-form label,
+.payment-methods,
+.payment-methods legend {
+  color: #687276;
+}
+
+.auth-form input:focus,
+.auth-form select:focus,
+.search-control input:focus,
+.sort-control select:focus {
+  border-color: #2f686b;
+  outline: 2px solid rgba(47, 104, 107, 0.16);
+}
+
+.payment-methods,
+.card-fields,
+.wallet-fields {
+  border-color: #d8d0c2;
+  background: #f5f1e8;
+}
+
+.payment-option input {
+  accent-color: #2f686b;
+}
+
+.cart-item {
+  background: #f5f1e8;
+  border-color: #d8d0c2;
+}
+
+.cart-item-subtotal,
+.checkout-summary-row strong,
+.summary-row strong {
+  color: #203c4d !important;
+}
+
+.checkout-summary {
+  background: #e6eee9;
+  border-color: #c6d5cf;
+}
+
+.cart-summary {
+  border-top-color: #d8d0c2;
+}
+
+.remove-item {
+  background: #fff3e5;
+  color: #9f5540;
+}
+
+@media (max-width: 900px) {
+  .catalog-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-control,
+  .sort-control {
+    width: 100%;
+  }
+}
+
 .header-banner {
   width: 100%;
   height: 132px;
@@ -2215,6 +2462,358 @@ blockquote {
     width: 58px;
     height: 36px;
   }
+}
+
+/* Last override layer: keeps legacy rules above from reintroducing old colors. */
+body,
+html {
+  background: #f5f1e8 !important;
+  color: #24333b !important;
+}
+
+.topbar {
+  background: #203c4d !important;
+  border-bottom: 3px solid #c79b5b !important;
+}
+
+.hero,
+.catalog,
+.discounts,
+.features,
+.reviews {
+  background: #f5f1e8 !important;
+}
+
+.book-spotlight {
+  background: #fffdf8 !important;
+  border: 1px solid #d8d0c2 !important;
+  box-shadow: 0 14px 28px rgba(36, 51, 59, 0.12) !important;
+}
+
+.book-cover {
+  background: #d6b477 !important;
+  color: #203c4d !important;
+  box-shadow: none !important;
+}
+
+.book-cover::after {
+  border-color: rgba(32, 60, 77, 0.16) !important;
+}
+
+.cover-label {
+  background: #203c4d !important;
+  border-color: #203c4d !important;
+  color: #fffdf8 !important;
+}
+
+.cover-inner {
+  background: rgba(255, 253, 248, 0.58) !important;
+  border-color: rgba(32, 60, 77, 0.16) !important;
+  backdrop-filter: none !important;
+}
+
+.cover-inner p {
+  color: #40575e !important;
+}
+
+.kit-contents {
+  background: #e6eee9 !important;
+  border-color: #c6d5cf !important;
+  color: #687276 !important;
+}
+
+.kit-contents strong {
+  color: #203c4d !important;
+}
+
+.feature-card,
+.review-grid blockquote,
+.book-card {
+  background: #fffdf8 !important;
+  border-color: #d8d0c2 !important;
+  box-shadow: 0 8px 20px rgba(36, 51, 59, 0.07) !important;
+}
+
+.discount-card {
+  background: #e6eee9 !important;
+  border-color: #c6d5cf !important;
+}
+
+.discount-card-featured {
+  background: #fff3e5 !important;
+  border-color: #e1c7a7 !important;
+}
+
+.feature-icon {
+  background: #e6eee9 !important;
+  color: #2f686b !important;
+}
+
+.footer {
+  background: #203c4d !important;
+  border-top: 3px solid #c79b5b !important;
+}
+
+.footer p,
+.footer-links {
+  color: #cbd8d5 !important;
+}
+
+.modal,
+.cart-drawer {
+  background: #fffdf8 !important;
+  border-color: #d8d0c2 !important;
+  color: #24333b !important;
+}
+
+.auth-form input,
+.auth-form select,
+.sort-control select,
+.search-control input {
+  background: #fffdf8 !important;
+  color: #24333b !important;
+  border-color: #d8d0c2 !important;
+}
+
+.payment-methods,
+.card-fields,
+.wallet-fields,
+.checkout-summary {
+  background: #f5f1e8 !important;
+  border-color: #d8d0c2 !important;
+}
+
+.cart-item {
+  background: #f5f1e8 !important;
+  border-color: #d8d0c2 !important;
+}
+
+.order-status.success {
+  background: #e5f0e5 !important;
+  border-color: #a8c1a8 !important;
+  color: #426447 !important;
+}
+
+/* Calm library palette: restrained, readable, and intentionally free of loud gradients. */
+:root {
+  --bg: #f5f1e8;
+  --bg-soft: #ebe4d7;
+  --panel: #fffdf8;
+  --panel-alt: #e6eee9;
+  --primary: #2f686b;
+  --primary-strong: #245356;
+  --secondary: #c79b5b;
+  --accent: #b9684d;
+  --text: #24333b;
+  --muted: #687276;
+  --shadow: rgba(36, 51, 59, 0.12);
+  --border: #d8d0c2;
+  --success: #5f8061;
+  --primary-dark: #245356;
+  --primary-light: #6d9995;
+  --bg-color: #f5f1e8;
+  --card-bg: #fffdf8;
+  --text-main: #24333b;
+  --text-muted: #687276;
+  --border-color: #d8d0c2;
+}
+
+body {
+  background: #f5f1e8;
+  color: #24333b;
+}
+
+.topbar {
+  background: #203c4d;
+  border-bottom: 3px solid #c79b5b;
+  box-shadow: 0 3px 12px rgba(32, 60, 77, 0.16);
+}
+
+.brand-name,
+.nav a,
+.nav a:hover,
+.nav a:focus-visible {
+  color: #fffdf8;
+}
+
+.brand small {
+  color: #cbd8d5;
+}
+
+.brand-image {
+  border-color: #c79b5b;
+  box-shadow: none;
+}
+
+.nav {
+  color: #cbd8d5;
+}
+
+.pill.secondary {
+  background: transparent;
+  color: #f5f1e8;
+  border-color: rgba(245, 241, 232, 0.42);
+}
+
+.pill.secondary:hover,
+.pill.secondary:focus-visible {
+  background: rgba(245, 241, 232, 0.12);
+  border-color: #f5f1e8;
+}
+
+.pill.primary,
+.button.primary,
+.add-cart,
+.primary-submit,
+.finish-order {
+  background: #b9684d;
+  color: #fffdf8;
+  border: 1px solid #a85c44;
+  box-shadow: none;
+}
+
+.pill.primary:hover,
+.button.primary:hover,
+.add-cart:hover,
+.primary-submit:hover,
+.finish-order:hover {
+  background: #9f5540;
+}
+
+.cart-button #cartCount {
+  background: #c79b5b;
+  color: #203c4d;
+}
+
+.hero {
+  background: #ebe4d7;
+}
+
+.hero-copy h1,
+.section-heading h2 {
+  color: #203c4d;
+}
+
+.hero-copy p,
+.hero-metrics span {
+  color: #687276;
+}
+
+.eyebrow {
+  color: #2f686b;
+}
+
+.book-spotlight {
+  background: #fffdf8;
+  border: 1px solid #d8d0c2;
+  box-shadow: 0 14px 28px rgba(36, 51, 59, 0.12);
+}
+
+.book-cover {
+  background: #d6b477;
+  color: #203c4d;
+}
+
+.book-card,
+.feature-card,
+blockquote {
+  background: #fffdf8;
+  border: 1px solid #d8d0c2;
+  box-shadow: 0 8px 20px rgba(36, 51, 59, 0.07);
+}
+
+.book-card:hover {
+  border-color: #2f686b;
+  box-shadow: 0 12px 24px rgba(36, 51, 59, 0.12);
+}
+
+.book-card h3,
+.feature-card h3,
+.discount-card h3 {
+  color: #203c4d;
+}
+
+.book-card p,
+.discount-card p,
+.feature-card p {
+  color: #687276;
+}
+
+.book-footer strong,
+.new-price {
+  color: #b9684d;
+}
+
+.filter,
+.sort-control select,
+.search-control input,
+.auth-form input,
+.auth-form select {
+  background: #fffdf8;
+  color: #24333b;
+  border-color: #d8d0c2;
+}
+
+.filter {
+  color: #687276;
+}
+
+.filter.active,
+.filter:hover {
+  background: #2f686b;
+  color: #fffdf8;
+  border-color: #2f686b;
+}
+
+.search-control input::placeholder {
+  color: #8b9291;
+}
+
+.category-strip {
+  background: #2f686b;
+  color: #f5f1e8;
+}
+
+.strip-item {
+  border-color: rgba(245, 241, 232, 0.28);
+}
+
+.discount-card {
+  background: #e6eee9;
+  border-color: #c6d5cf;
+}
+
+.discount-card-featured {
+  background: #fff3e5;
+  border-color: #e1c7a7;
+}
+
+.discount-link {
+  color: #b9684d;
+}
+
+.modal,
+.cart-drawer {
+  background: #fffdf8;
+  color: #24333b;
+  border-color: #d8d0c2;
+  box-shadow: 0 18px 40px rgba(36, 51, 59, 0.18);
+}
+
+.modal-header h3,
+.cart-header h3,
+.summary-row strong {
+  color: #203c4d;
+}
+
+.header-banner {
+  border-bottom-color: #c79b5b;
+}
+
+.order-status.success {
+  background: #e5f0e5;
+  border-color: #a8c1a8;
+  color: #426447;
 }
 
 .book-spotlight {
@@ -2360,4 +2959,126 @@ body {
 .hero-grid {
   position: relative;
   z-index: 1;
+}
+
+/* Final palette lock for the legacy rules that follow earlier theme sections. */
+html,
+body {
+  background: #f5f1e8 !important;
+  color: #24333b !important;
+}
+
+.topbar {
+  background: #203c4d !important;
+  border-bottom: 3px solid #c79b5b !important;
+}
+
+.hero,
+.catalog,
+.discounts,
+.features,
+.reviews {
+  background: #f5f1e8 !important;
+}
+
+.hero::before {
+  display: none;
+}
+
+.book-spotlight,
+.feature-card,
+.review-grid blockquote,
+.book-card {
+  background: #fffdf8 !important;
+  border-color: #d8d0c2 !important;
+  box-shadow: 0 8px 20px rgba(36, 51, 59, 0.07) !important;
+}
+
+.book-cover {
+  background: #d6b477 !important;
+  color: #203c4d !important;
+  box-shadow: none !important;
+}
+
+.book-cover::after {
+  border-color: rgba(32, 60, 77, 0.16) !important;
+}
+
+.cover-label {
+  background: #203c4d !important;
+  border-color: #203c4d !important;
+  color: #fffdf8 !important;
+}
+
+.cover-inner {
+  background: rgba(255, 253, 248, 0.58) !important;
+  border-color: rgba(32, 60, 77, 0.16) !important;
+  backdrop-filter: none !important;
+}
+
+.cover-inner p {
+  color: #40575e !important;
+}
+
+.kit-contents,
+.feature-icon {
+  background: #e6eee9 !important;
+  border-color: #c6d5cf !important;
+  color: #687276 !important;
+}
+
+.kit-contents strong,
+.feature-icon {
+  color: #2f686b !important;
+}
+
+.discount-card {
+  background: #e6eee9 !important;
+  border-color: #c6d5cf !important;
+}
+
+.discount-card-featured {
+  background: #fff3e5 !important;
+  border-color: #e1c7a7 !important;
+}
+
+.footer {
+  background: #203c4d !important;
+  border-top: 3px solid #c79b5b !important;
+}
+
+.footer p,
+.footer-links {
+  color: #cbd8d5 !important;
+}
+
+.modal,
+.cart-drawer {
+  background: #fffdf8 !important;
+  border-color: #d8d0c2 !important;
+  color: #24333b !important;
+}
+
+.auth-form input,
+.auth-form select,
+.sort-control select,
+.search-control input {
+  background: #fffdf8 !important;
+  color: #24333b !important;
+  border-color: #d8d0c2 !important;
+}
+
+.payment-methods,
+.card-fields,
+.wallet-fields,
+.checkout-summary,
+.cart-item {
+  background: #f5f1e8 !important;
+  border-color: #d8d0c2 !important;
+}
+
+.order-status.success {
+  background: #e5f0e5 !important;
+  border-color: #a8c1a8 !important;
+  color: #426447 !important;
 }
