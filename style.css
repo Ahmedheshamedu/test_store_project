@@ -2073,6 +2073,150 @@ blockquote {
   justify-content: space-between;
 }
 
+.header-banner {
+  width: 100%;
+  height: 132px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(218, 154, 92, 0.32);
+  background: #211c1a;
+}
+
+.header-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+.brand-image {
+  width: 72px;
+  height: 42px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  object-position: center;
+  border: 2px solid #d99a5b;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(28, 19, 15, 0.32);
+}
+
+/* A warmer editorial palette keeps the store distinctive without relying on default AI gradients. */
+:root {
+  --bg: #211c1a;
+  --bg-soft: #302a25;
+  --panel: rgba(47, 39, 33, 0.94);
+  --panel-alt: #40362d;
+  --primary: #d99a5b;
+  --primary-strong: #b86f3d;
+  --secondary: #c6b27a;
+  --accent: #b97868;
+  --text: #f4eadb;
+  --muted: #c9bca9;
+  --shadow: rgba(18, 13, 10, 0.42);
+  --border: rgba(217, 154, 91, 0.3);
+  --success: #a8c38b;
+  --primary-dark: #8f5433;
+  --primary-light: #e4b783;
+  --bg-color: #211c1a;
+  --card-bg: #302a25;
+  --text-main: #f4eadb;
+  --text-muted: #c9bca9;
+  --border-color: rgba(217, 154, 91, 0.3);
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(198, 178, 122, 0.1), transparent 24%),
+    radial-gradient(circle at 88% 72%, rgba(185, 120, 104, 0.1), transparent 22%),
+    linear-gradient(145deg, #211c1a 0%, #29231f 52%, #181514 100%);
+}
+
+.topbar {
+  background: rgba(33, 28, 26, 0.94);
+  border-bottom-color: rgba(217, 154, 91, 0.24);
+}
+
+.hero {
+  background: rgba(48, 42, 37, 0.34);
+}
+
+.book-spotlight {
+  background: linear-gradient(180deg, #40362d, #29231f);
+}
+
+.book-cover {
+  background: linear-gradient(145deg, #d8b27c, #a9664f 58%, #644c42);
+  color: #2a211d;
+}
+
+.sort-control select,
+.search-control input {
+  background: #302a25;
+  border-color: rgba(217, 154, 91, 0.3);
+}
+
+.filter {
+  background: rgba(198, 178, 122, 0.1);
+  border-color: rgba(217, 154, 91, 0.25);
+}
+
+.filter.active,
+.filter:hover {
+  background: #b86f3d;
+  color: #fff4e5;
+}
+
+.brand-mark {
+  background: #d99a5b;
+  color: #211c1a;
+  box-shadow: 0 8px 18px rgba(217, 154, 91, 0.22);
+}
+
+.book-card,
+.feature-card,
+blockquote {
+  background: linear-gradient(145deg, #40362d, #2b2521);
+  border-color: rgba(217, 154, 91, 0.22);
+}
+
+.pill.primary,
+.button.primary,
+.add-cart,
+.primary-submit,
+.finish-order {
+  background: #b86f3d;
+  color: #fff4e5;
+}
+
+.pill.primary:hover,
+.button.primary:hover,
+.add-cart:hover,
+.primary-submit:hover,
+.finish-order:hover {
+  background: #d08448;
+}
+
+.modal,
+.cart-drawer {
+  background: #302a25;
+  border-color: rgba(217, 154, 91, 0.28);
+}
+
+.category-strip {
+  background: rgba(198, 178, 122, 0.12);
+}
+
+@media (max-width: 640px) {
+  .header-banner {
+    height: 96px;
+  }
+
+  .brand-image {
+    width: 58px;
+    height: 36px;
+  }
+}
+
 .book-spotlight {
   width: min(100%, 440px);
   padding: 1.25rem;
