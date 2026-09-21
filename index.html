@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrepVerse Books</title>
+    <meta
+      name="description"
+      content="Creative bookstore for engineering aspirants with curated prep books for GATE, JEE, and core engineering exams."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Go to the home page">
+          <div class="brand-mark">M</div>
+          <div>
+            <span class="brand-name">Must University</span>
+            <small>Engineering Book Store</small>
+          </div>
+        </a>
+
+        <nav class="nav" aria-label="Main navigation">
+          <a href="#catalog">Catalog</a>
+          <a href="#discounts">Discounts</a>
+          <a href="#features">Features</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#offers">Offers</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="pill secondary" type="button" data-modal="login">Student Login</button>
+          <button class="pill secondary" type="button" data-modal="register">Register</button>
+          <button class="pill secondary hidden" type="button" data-logout>Log out</button>
+          <button class="pill primary cart-button" type="button" data-cart-toggle>
+            Cart <span id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Must University</span>
+            <h1>Build your engineering future with confidence.</h1>
+            <p>
+              Discover strong preparatory engineering textbooks for Must University students — clear,
+              practical, and designed to strengthen core concepts, problem-solving, and exam readiness.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button primary" href="#catalog">Browse textbooks</a>
+              <a class="button ghost" href="#offers">Campus offers</a>
+            </div>
+
+            <ul class="hero-metrics" aria-label="Store metrics">
+              <li><strong>18k+</strong><span>students served</span></li>
+              <li><strong>240+</strong><span>core titles</span></li>
+              <li><strong>299 EGP</strong><span>every book</span></li>
+            </ul>
+          </div>
+
+          <div class="hero-visual" aria-label="Featured book display">
+            <div class="book-spotlight">
+              <div class="book-cover">
+                <span class="cover-label">Campus Essential</span>
+                <div class="cover-inner">
+                  <h3>Prep</h3>
+                  <p>Engineering<br />Foundation</p>
+                </div>
+              </div>
+              <div class="book-info">
+                <p class="mini-tag">University bundle</p>
+                <h2>Engineering Kit</h2>
+                <div class="price-row">
+                  <span class="new-price">1199 EGP</span>
+                </div>
+                <div class="kit-actions">
+                  <button class="add-cart kit-add-cart" type="button" data-kit-add>Add kit to cart</button>
+                  <button class="button ghost kit-details-toggle" type="button" data-kit-toggle aria-expanded="false">View kit contents</button>
+                </div>
+                <div class="kit-contents hidden" data-kit-contents>
+                  <strong>Kit includes:</strong>
+                  <ul>
+                    <li>Engineering Mathematics Foundation</li>
+                    <li>Applied Physics for Engineers</li>
+                    <li>Engineering Mechanics Essentials</li>
+                    <li>Engineering Drawing &amp; Visualization</li>
+                    <li>Linear Algebra &amp; Differential Equations</li>
+                    <li>Electrical Fundamentals Guide</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="category-strip" id="offers">
+        <div class="container strip-inner">
+          <div class="strip-item">Free campus pickup</div>
+          <div class="strip-item">299 EGP each</div>
+          <div class="strip-item">Prep for first-year & senior levels</div>
+          <div class="strip-item">Approved by faculty</div>
+        </div>
+      </section>
+
+      <section class="catalog section" id="catalog">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Preparatory engineering collection</span>
+              <h2>Smart textbooks for every engineering path</h2>
+            </div>
+            <div class="catalog-toolbar">
+              <label class="search-control">
+                <span>Search the catalog</span>
+                <input id="catalogSearch" type="search" placeholder="Search by name, category, or description" autocomplete="off" />
+              </label>
+              <div class="filter-row" aria-label="Book categories">
+              <button class="filter active" data-filter="all" type="button">All</button>
+              <button class="filter" data-filter="engineering" type="button">Engineering</button>
+              <button class="filter" data-filter="programming" type="button">Programming</button>
+              <button class="filter" data-filter="web-development" type="button">Web Development</button>
+              <button class="filter" data-filter="math" type="button">Math</button>
+              <button class="filter" data-filter="physics" type="button">Physics</button>
+              <button class="filter" data-filter="core" type="button">Core</button>
+              <button class="filter" data-filter="design" type="button">Design</button>
+              </div>
+              <label class="sort-control">
+                <span>Sort by</span>
+                <select id="sortBooks" aria-label="Sort books">
+                  <option value="default">Featured</option>
+                  <option value="price-asc">Price: low to high</option>
+                  <option value="price-desc">Price: high to low</option>
+                  <option value="popularity">Popularity</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="product-grid">
+            <article class="book-card" data-category="engineering math" data-popularity="49" data-price="299">
+              <div class="book-badge gate">Math</div>
+              <h3>Engineering Mathematics Foundation</h3>
+              <p>Calculus, algebra, and applied methods tailored for engineering study plans.</p>
+              <div class="book-meta">
+                <span>First year</span>
+                <span>4.9 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>299 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="engineering physics" data-popularity="48" data-price="299">
+              <div class="book-badge jee">Physics</div>
+              <h3>Applied Physics for Engineers</h3>
+              <p>Simple explanations of motion, electricity, optics, and measurement in practice.</p>
+              <div class="book-meta">
+                <span>Lab-ready</span>
+                <span>4.8 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>299 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="engineering core" data-popularity="47" data-price="299">
+              <div class="book-badge core">Core</div>
+              <h3>Engineering Mechanics Essentials</h3>
+              <p>Forces, motion, statics, and structural understanding explained with examples.</p>
+              <div class="book-meta">
+                <span>Mechanical</span>
+                <span>4.7 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>299 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="engineering design" data-popularity="48" data-price="299">
+              <div class="book-badge aptitude">Design</div>
+              <h3>Engineering Drawing & Visualization</h3>
+              <p>Orthographic projection, technical drawing, and design communication essentials.</p>
+              <div class="book-meta">
+                <span>CAD prep</span>
+                <span>4.8 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>299 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="engineering math" data-popularity="49" data-price="299">
+              <div class="book-badge gate">Math</div>
+              <h3>Linear Algebra & Differential Equations</h3>
+              <p>Strong focus on engineering modelling, matrices, and solution techniques.</p>
+              <div class="book-meta">
+                <span>Semester 2</span>
+                <span>4.9 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>299 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="engineering core" data-popularity="47" data-price="299">
+              <div class="book-badge core">Core</div>
+              <h3>Electrical Fundamentals Guide</h3>
+              <p>Circuits, current flow, and practical electrical principles for engineering students.</p>
+              <div class="book-meta">
+                <span>Electrical</span>
+                <span>4.7 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>299 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="programming web-development javascript" data-popularity="46" data-price="349">
+              <div class="book-badge core">Programming</div>
+              <h3>JavaScript for Web Projects</h3>
+              <p>Build interactive browser experiences with modern JavaScript, DOM APIs, events, and practical project patterns.</p>
+              <div class="book-meta">
+                <span>Web development</span>
+                <span>4.8 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>349 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="programming web-development html css" data-popularity="45" data-price="329">
+              <div class="book-badge aptitude">Web Development</div>
+              <h3>HTML &amp; CSS Web Design</h3>
+              <p>Learn semantic HTML, responsive CSS, layouts, and accessible design by creating complete web pages.</p>
+              <div class="book-meta">
+                <span>Frontend basics</span>
+                <span>4.7 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>329 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="programming python" data-popularity="44" data-price="379">
+              <div class="book-badge jee">Programming</div>
+              <h3>Python Programming Fundamentals</h3>
+              <p>Start programming with Python through clear lessons on variables, functions, data structures, and automation.</p>
+              <div class="book-meta">
+                <span>Beginner friendly</span>
+                <span>4.8 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>379 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+
+            <article class="book-card" data-category="programming web-development" data-popularity="43" data-price="429">
+              <div class="book-badge gate">Programming</div>
+              <h3>Full-Stack Web Development Guide</h3>
+              <p>Understand frontend and backend foundations, APIs, databases, and the workflow behind full-stack applications.</p>
+              <div class="book-meta">
+                <span>Intermediate</span>
+                <span>4.6 ★</span>
+              </div>
+              <div class="book-footer">
+                <strong>429 EGP</strong>
+                <button class="add-cart" type="button">Add to cart</button>
+              </div>
+            </article>
+          </div>
+          <p class="catalog-empty hidden" id="catalogEmpty" role="status">No books found. Try another search or category.</p>
+        </div>
+      </section>
+
+      <section class="discounts section" id="discounts">
+        <div class="container">
+          <div class="section-heading left">
+            <div>
+              <span class="eyebrow">Student savings</span>
+              <h2>Build your shelf for less</h2>
+            </div>
+            <p class="discounts-intro">Useful discounts for the moments when your study plan gets serious.</p>
+          </div>
+
+          <div class="discount-grid">
+            <article class="discount-card discount-card-featured">
+              <span class="discount-label">Best value</span>
+              <strong class="discount-amount">15% off</strong>
+              <h3>Complete your foundation</h3>
+              <p>Save when you choose any four textbooks from the engineering collection.</p>
+              <a class="discount-link" href="#catalog">Shop four-book bundles <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="discount-card">
+              <span class="discount-label">For new students</span>
+              <strong class="discount-amount">10% off</strong>
+              <h3>Welcome to Must</h3>
+              <p>Start your first semester with a welcome saving on your first textbook order.</p>
+              <a class="discount-link" href="#catalog">Explore textbooks <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article class="discount-card">
+              <span class="discount-label">Campus pickup</span>
+              <strong class="discount-amount">Free</strong>
+              <h3>Collect on campus</h3>
+              <p>Skip delivery fees and collect your books from the university pickup point.</p>
+              <a class="discount-link" href="#offers">See pickup details <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="features section" id="features">
+        <div class="container">
+          <div class="section-heading left">
+            <span class="eyebrow">Why students choose us</span>
+            <h2>Engineering study made clearer, easier, and more practical</h2>
+          </div>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">01</div>
+              <h3>Aligned with university syllabus</h3>
+              <p>Each textbook supports strong university preparation and reinforces the actual engineering curriculum.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">02</div>
+              <h3>Faculty-supported resources</h3>
+              <p>Materials chosen for clarity, exam readiness, and strong conceptual understanding.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">03</div>
+              <h3>Affordable fixed pricing</h3>
+              <p>One simple price for every textbook: 299 Egyptian pounds, with no hidden surprises.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reviews section" id="reviews">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="eyebrow">Student feedback</span>
+            <h2>Trusted by future engineers across Egypt</h2>
+          </div>
+
+          <div class="review-grid">
+            <blockquote>
+              “The books are practical, clear, and exactly what we need for engineering courses at university.”
+              <footer>— Aya, Civil Engineering</footer>
+            </blockquote>
+            <blockquote>
+              “The fixed price made it easy to build my full study shelf without worrying about cost.”
+              <footer>— Omar, Mechanical Engineering</footer>
+            </blockquote>
+            <blockquote>
+              “I found the explanations easier to follow than my lecture notes during revision week.”
+              <footer>— Sarah, Electrical Engineering</footer>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-wrap">
+        <div>
+          <div class="brand footer-brand">
+            <div class="brand-mark">M</div>
+            <div>
+              <span class="brand-name">Must University</span>
+            </div>
+          </div>
+          <p>Preparatory engineering textbooks for a stronger academic future.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#catalog">Books</a>
+          <a href="#features">Why us</a>
+          <a href="#reviews">Reviews</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="overlay hidden" id="authOverlay"></div>
+    <div class="order-status hidden" id="orderStatus" role="status" aria-live="polite"></div>
+
+    <div class="modal hidden" id="loginModal" aria-modal="true" role="dialog">
+      <div class="modal-header">
+        <h3>Student Login</h3>
+        <button class="close-modal" type="button" data-close="loginModal">×</button>
+      </div>
+      <form id="loginForm" class="auth-form">
+        <label>
+          Email
+          <input type="email" name="email" placeholder="student@must.edu.eg" required />
+        </label>
+        <label class="password-field">
+          Password
+          <span class="password-input">
+            <input type="password" name="password" placeholder="Enter password" required />
+            <button class="toggle-password" type="button" data-toggle-password aria-label="Show password">Show</button>
+          </span>
+        </label>
+        <button type="submit" class="primary-submit">Login</button>
+      </form>
+    </div>
+
+    <div class="modal hidden" id="registerModal" aria-modal="true" role="dialog">
+      <div class="modal-header">
+        <h3>Create Account</h3>
+        <button class="close-modal" type="button" data-close="registerModal">×</button>
+      </div>
+      <form id="registerForm" class="auth-form">
+        <label>
+          Full name
+          <input type="text" name="name" placeholder="Your name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="student@must.edu.eg" required />
+        </label>
+        <label class="password-field">
+          Password
+          <span class="password-input">
+            <input type="password" name="password" placeholder="Create password" required />
+            <button class="toggle-password" type="button" data-toggle-password aria-label="Show password">Show</button>
+          </span>
+        </label>
+        <button type="submit" class="primary-submit">Register</button>
+      </form>
+    </div>
+
+    <div class="modal hidden" id="checkoutModal" aria-modal="true" role="dialog">
+      <div class="modal-header">
+        <h3>Complete your order</h3>
+        <button class="close-modal" type="button" data-close="checkoutModal">×</button>
+      </div>
+      <div class="checkout-summary" id="checkoutSummary" aria-live="polite"></div>
+      <form id="checkoutForm" class="auth-form">
+        <label>
+          Full name (four parts)
+          <input type="text" name="fullName" placeholder="Enter your full name" pattern="^\s*\S+(?:\s+\S+){3,}\s*$" title="Please enter your four-part name" required />
+        </label>
+        <label>
+          Governorate
+          <select name="governorate" id="governorate" required>
+            <option value="">Choose a governorate</option>
+          </select>
+        </label>
+        <label>
+          Center / city
+          <select name="city" id="city" required disabled>
+            <option value="">Choose a governorate first</option>
+          </select>
+        </label>
+        <label>
+          Detailed address
+          <input type="text" name="location" placeholder="Street, building, apartment..." required />
+        </label>
+        <label>
+          Primary contact number
+          <input type="tel" name="phone" placeholder="01XXXXXXXXX" inputmode="tel" required />
+        </label>
+        <label>
+          Additional contact number
+          <input type="tel" name="additionalPhone" placeholder="01XXXXXXXXX" inputmode="tel" required />
+        </label>
+        <fieldset class="payment-methods">
+          <legend>Payment method</legend>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="cash" checked />
+            Cash on delivery
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="card" />
+            Visa
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="wallet" />
+            Electronic wallet
+          </label>
+        </fieldset>
+        <div id="cardFields" class="card-fields hidden">
+          <label>
+            Card number
+            <input type="text" name="cardNumber" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456" maxlength="19" />
+          </label>
+          <div class="card-row">
+            <label>
+              Expiry date
+              <input type="text" name="cardExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5" />
+            </label>
+            <label>
+              CVV
+              <input type="password" name="cardCvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" />
+            </label>
+          </div>
+        </div>
+        <div id="walletFields" class="wallet-fields hidden">
+          <label>
+            Wallet provider
+            <select name="walletProvider">
+              <option value="">Choose a wallet</option>
+              <option value="vodafone-cash">Vodafone Cash</option>
+              <option value="orange-cash">Orange Cash</option>
+              <option value="etisalat-cash">Etisalat Cash</option>
+              <option value="we-pay">WE Pay</option>
+            </select>
+          </label>
+          <label>
+            Wallet phone number
+            <input type="tel" name="walletPhone" placeholder="01XXXXXXXXX" inputmode="tel" />
+          </label>
+        </div>
+        <button type="submit" class="primary-submit">Place order</button>
+      </form>
+    </div>
+
+    <aside class="cart-drawer hidden" id="cartDrawer" aria-label="Shopping cart">
+      <div class="cart-header">
+        <h3>Your cart</h3>
+        <button class="close-cart" type="button" data-close-cart>×</button>
+      </div>
+      <div id="cartItems" class="cart-items">
+        <p class="empty-cart">No books selected yet.</p>
+      </div>
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Items</span>
+          <strong id="cartItemsCount">0</strong>
+        </div>
+        <div class="summary-row">
+          <span>Total</span>
+          <strong id="cartTotal">0 EGP</strong>
+        </div>
+        <button id="finishOrderBtn" class="finish-order" type="button">Finish order</button>
+      </div>
+    </aside>
+
+    <script src="script.js"></script>
+  </body>
+</html>
