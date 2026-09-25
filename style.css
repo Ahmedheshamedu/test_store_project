@@ -3215,7 +3215,7 @@ body {
 
   @media (max-width: 640px) {
     .header-banner {
-      height: 150px !important;
+      height: 132px !important;
     }
 
     .topbar,
@@ -3302,7 +3302,7 @@ body {
 
   @media (max-width: 640px) {
     .header-banner {
-      height: 150px !important;
+      height: 132px !important;
     }
 
     .topbar,
@@ -3313,6 +3313,197 @@ body {
     .brand-image {
       width: 58px !important;
       height: 36px !important;
+    }
+  }
+
+  /* Final mobile overrides must remain after all legacy rules. */
+  @media (max-width: 767px) {
+    .header-banner {
+      height: 132px !important;
+    }
+
+    .brand-image {
+      width: 58px !important;
+      height: 36px !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .header-banner {
+      height: 132px !important;
+    }
+
+    .brand-image {
+      width: 58px !important;
+      height: 36px !important;
+    }
+  }
+
+  /* Mobile layout: keep every section inside the viewport without desktop mode. */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 767px) {
+    .container {
+      width: min(100% - 1.5rem, 560px);
+    }
+
+    .header-banner {
+      height: 132px !important;
+    }
+
+    .header-banner img {
+      object-fit: cover !important;
+      object-position: center !important;
+    }
+
+    .topbar {
+      position: sticky !important;
+    }
+
+    .nav-wrap {
+      min-height: 0 !important;
+      padding: 0.7rem 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 0.7rem;
+    }
+
+    .brand {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .brand-image {
+      width: 58px !important;
+      height: 36px !important;
+    }
+
+    .brand-name {
+      font-size: 0.95rem;
+    }
+
+    .nav {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+      gap: 1.15rem;
+      padding: 0.15rem 0 0.2rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+    }
+
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-actions {
+      width: 100%;
+      justify-content: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-actions .pill {
+      padding: 0.55rem 0.75rem;
+      font-size: 0.78rem;
+    }
+
+    .hero {
+      padding: 2.7rem 0 2rem;
+    }
+
+    .hero-grid,
+    .catalog-toolbar,
+    .checkout-layout {
+      grid-template-columns: 1fr !important;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.25rem, 12vw, 3.4rem);
+    }
+
+    .hero-copy p {
+      font-size: 0.98rem;
+    }
+
+    .hero-actions,
+    .kit-actions {
+      gap: 0.65rem;
+    }
+
+    .hero-actions .button,
+    .kit-actions > * {
+      flex: 1 1 145px;
+    }
+
+    .hero-metrics {
+      gap: 0.5rem;
+    }
+
+    .hero-metrics strong {
+      font-size: 1.15rem;
+    }
+
+    .book-spotlight {
+      width: 100%;
+      padding: 0.9rem;
+    }
+
+    .book-cover {
+      height: 300px !important;
+    }
+
+    .cover-inner {
+      transform: none;
+    }
+
+    .product-grid {
+      grid-template-columns: 1fr !important;
+      gap: 1rem;
+    }
+
+    .feature-grid,
+    .review-grid,
+    .discount-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .section {
+      padding: 3.4rem 0;
+    }
+
+    .section-heading h2 {
+      font-size: 1.8rem;
+    }
+
+    .strip-inner {
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    .modal,
+    .cart-drawer {
+      width: min(100% - 1rem, 520px);
+      max-height: calc(100dvh - 1rem);
+      overflow-y: auto;
+    }
+
+    .card-row,
+    .form-row,
+    .checkout-form .form-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .cart-item {
+      grid-template-columns: 1fr !important;
+    }
+
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
     }
   }
 
@@ -3422,7 +3613,7 @@ body {
 
 @media (max-width: 640px) {
   .header-banner {
-    height: 150px !important;
+    height: 132px !important;
   }
 
   .topbar,
