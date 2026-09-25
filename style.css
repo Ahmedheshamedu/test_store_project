@@ -3250,6 +3250,32 @@ body {
     will-change: auto !important;
   }
 
+  .book-cover {
+    background: #203c5a !important;
+    color: #f7fafc !important;
+    box-shadow: 0 18px 32px rgba(17, 35, 56, 0.28) !important;
+  }
+
+  .book-cover::after {
+    border-color: rgba(247, 250, 252, 0.28) !important;
+  }
+
+  .book-cover .cover-label {
+    background: #152b43 !important;
+    border-color: #152b43 !important;
+    color: #fffdf8 !important;
+  }
+
+  .book-cover .cover-inner {
+    background: rgba(15, 42, 68, 0.34) !important;
+    border-color: rgba(247, 250, 252, 0.28) !important;
+  }
+
+  .book-cover .cover-inner h3,
+  .book-cover .cover-inner p {
+    color: #f7fafc !important;
+  }
+
   .topbar {
     position: sticky !important;
     top: 0 !important;
