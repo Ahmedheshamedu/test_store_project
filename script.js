@@ -470,3 +470,43 @@ logoutButton.addEventListener('click', () => {
   localStorage.removeItem(AUTH_STORAGE_KEY);
   updateAuthUI();
 });
+
+function setupScrollReveal() {
+  const animatedElements = document.querySelectorAll(
+    '[data-scroll-animations] .section-heading, ' +
+    '[data-scroll-animations] .book-spotlight, ' +
+    '[data-scroll-animations] .book-card, ' +
+    '[data-scroll-animations] .discount-card, ' +
+    '[data-scroll-animations] .feature-card, ' +
+    '[data-scroll-animations] blockquote'
+  );
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    animatedElements.forEach((element) => element.classList.add('scroll-reveal-visible'));
+    return;
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    animatedElements.forEach((element) => element.classList.add('scroll-reveal-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, currentObserver) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('scroll-reveal-visible');
+      currentObserver.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -8% 0px'
+  });
+
+  animatedElements.forEach((element, index) => {
+    element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 70}ms`);
+    element.classList.add('scroll-reveal');
+    observer.observe(element);
+  });
+}
+
+setupScrollReveal();

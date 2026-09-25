@@ -3316,6 +3316,29 @@ body {
     }
   }
 
+  /* Content-only scroll reveal. Header, banner, and navigation are intentionally excluded. */
+  [data-scroll-animations] .scroll-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 560ms ease-out,
+      transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-scroll-animations] .scroll-reveal.scroll-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-scroll-animations] .scroll-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   /* Stable sticky navigation: the banner stays in the document and the nav pins at the viewport top. */
   .topbar {
     position: sticky !important;
