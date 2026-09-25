@@ -2968,46 +2968,28 @@ body {
   z-index: 1;
 }
 
-/* The banner starts large, then folds away while the navigation remains available. */
+/* Keep the banner and navigation dimensions stable while scrolling. */
 .topbar {
   position: sticky !important;
   top: 0 !important;
   z-index: 100 !important;
   backdrop-filter: none !important;
-  transition: box-shadow 220ms ease, border-color 220ms ease;
+  transition: none;
 }
 
 .header-banner {
-  max-height: 210px;
+  height: clamp(145px, 17vw, 210px);
+  max-height: none;
   opacity: 1;
-  transition: max-height 360ms ease, opacity 260ms ease, border-color 260ms ease;
+  transition: none;
 }
 
 .nav-wrap {
-  transition: min-height 320ms ease, padding 320ms ease;
+  transition: none;
 }
 
 .brand-image {
-  transition: width 320ms ease, height 320ms ease, opacity 260ms ease;
-}
-
-.topbar.is-scrolled {
-  box-shadow: 0 6px 18px rgba(32, 60, 77, 0.16);
-}
-
-.topbar.is-scrolled .header-banner {
-  max-height: 0;
-  opacity: 0;
-  border-bottom-color: transparent;
-}
-
-.topbar.is-scrolled .nav-wrap {
-  min-height: 62px;
-}
-
-.topbar.is-scrolled .brand-image {
-  width: 54px;
-  height: 34px;
+  transition: none;
 }
 
 /* Final palette lock for the legacy rules that follow earlier theme sections. */
@@ -3231,14 +3213,6 @@ body {
     transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
-  .topbar.is-scrolled {
-    box-shadow: 0 6px 18px rgba(32, 60, 77, 0.22);
-  }
-
-  .topbar.is-scrolled .brand-image {
-    transform: scale(0.84);
-  }
-
   @media (max-width: 640px) {
     .header-banner {
       height: 150px !important;
@@ -3257,6 +3231,65 @@ body {
     }
   }
 
+  /* Final stable header rules: no scroll animation and no layout-changing properties. */
+  .header-banner {
+    position: relative !important;
+    height: clamp(145px, 17vw, 210px) !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: hidden !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  .header-banner img {
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    min-height: 78px !important;
+    contain: paint !important;
+    transition: none !important;
+    box-shadow: 0 3px 12px rgba(32, 60, 77, 0.16) !important;
+  }
+
+  .nav-wrap {
+    min-height: 78px !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  .brand-image {
+    width: 72px !important;
+    height: 42px !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  @media (max-width: 640px) {
+    .header-banner {
+      height: 150px !important;
+    }
+
+    .topbar,
+    .nav-wrap {
+      min-height: 78px !important;
+    }
+
+    .brand-image {
+      width: 58px !important;
+      height: 36px !important;
+    }
+  }
+
 /* Stable sticky-header behavior: hysteresis in JS prevents threshold chatter,
    while the fixed transition property prevents layout-driven flashing. */
 .topbar {
@@ -3272,32 +3305,17 @@ body {
   max-height: none !important;
   overflow: hidden !important;
   opacity: 1;
-  will-change: height, opacity;
-  transition:
-    height 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  transition: none !important;
 }
 
-.topbar.is-scrolled .header-banner {
-  height: 0 !important;
-  max-height: none !important;
-  opacity: 0;
-  border-bottom-color: transparent !important;
-}
-
-.topbar.is-scrolled .nav-wrap {
-  min-height: 62px;
-}
-
-/* Keep the scroll behavior authoritative after the legacy stylesheet blocks. */
+/* Keep the header dimensions stable after the legacy stylesheet blocks. */
 .topbar {
   position: sticky !important;
   top: 0 !important;
   z-index: 100 !important;
   backdrop-filter: none !important;
   contain: paint;
-  transition: box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: none;
 }
 
 .header-banner {
@@ -3305,12 +3323,7 @@ body {
   max-height: none !important;
   opacity: 1;
   overflow: hidden;
-  transform-origin: top center;
-  will-change: height, opacity, transform;
-  transition:
-    height 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: none;
 }
 
 .header-banner img {
@@ -3322,26 +3335,11 @@ body {
 }
 
 .nav-wrap {
-  will-change: min-height;
-  transition: min-height 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: none;
 }
 
 .brand-image {
-  will-change: width, height, opacity;
-  transition:
-    width 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.topbar.is-scrolled .header-banner {
-  height: 0 !important;
-  opacity: 0;
-  border-bottom-color: transparent !important;
-}
-
-.topbar.is-scrolled .nav-wrap {
-  min-height: 62px;
+  transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3350,5 +3348,64 @@ body {
   .nav-wrap,
   .brand-image {
     transition: none !important;
+  }
+}
+
+/* Final stable state: no scroll-driven header animation or layout changes. */
+.header-banner {
+  position: relative !important;
+  height: clamp(145px, 17vw, 210px) !important;
+  max-height: none !important;
+  opacity: 1 !important;
+  overflow: hidden !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+.header-banner img {
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  min-height: 78px !important;
+  contain: paint !important;
+  transition: none !important;
+  box-shadow: 0 3px 12px rgba(32, 60, 77, 0.16) !important;
+}
+
+.nav-wrap {
+  min-height: 78px !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+.brand-image {
+  width: 72px !important;
+  height: 42px !important;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto !important;
+}
+
+@media (max-width: 640px) {
+  .header-banner {
+    height: 150px !important;
+  }
+
+  .topbar,
+  .nav-wrap {
+    min-height: 78px !important;
+  }
+
+  .brand-image {
+    width: 58px !important;
+    height: 36px !important;
   }
 }
