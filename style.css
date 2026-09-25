@@ -2968,6 +2968,48 @@ body {
   z-index: 1;
 }
 
+/* The banner starts large, then folds away while the navigation remains available. */
+.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  backdrop-filter: none !important;
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.header-banner {
+  max-height: 210px;
+  opacity: 1;
+  transition: max-height 360ms ease, opacity 260ms ease, border-color 260ms ease;
+}
+
+.nav-wrap {
+  transition: min-height 320ms ease, padding 320ms ease;
+}
+
+.brand-image {
+  transition: width 320ms ease, height 320ms ease, opacity 260ms ease;
+}
+
+.topbar.is-scrolled {
+  box-shadow: 0 6px 18px rgba(32, 60, 77, 0.16);
+}
+
+.topbar.is-scrolled .header-banner {
+  max-height: 0;
+  opacity: 0;
+  border-bottom-color: transparent;
+}
+
+.topbar.is-scrolled .nav-wrap {
+  min-height: 62px;
+}
+
+.topbar.is-scrolled .brand-image {
+  width: 54px;
+  height: 34px;
+}
+
 /* Final palette lock for the legacy rules that follow earlier theme sections. */
 html,
 body {
@@ -3144,5 +3186,101 @@ body {
   .strip-item:nth-child(-n + 2) {
     border-bottom: 1px solid #c6d5cf;
     padding-bottom: 0.7rem;
+  }
+}
+
+/* Stable sticky-header behavior: hysteresis in JS prevents threshold chatter,
+   while the fixed transition property prevents layout-driven flashing. */
+.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  contain: paint !important;
+  transition: box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.header-banner {
+  height: clamp(145px, 17vw, 210px) !important;
+  max-height: none !important;
+  overflow: hidden !important;
+  opacity: 1;
+  will-change: height, opacity;
+  transition:
+    height 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.topbar.is-scrolled .header-banner {
+  height: 0 !important;
+  max-height: none !important;
+  opacity: 0;
+  border-bottom-color: transparent !important;
+}
+
+.topbar.is-scrolled .nav-wrap {
+  min-height: 62px;
+}
+
+/* Keep the scroll behavior authoritative after the legacy stylesheet blocks. */
+.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  backdrop-filter: none !important;
+  contain: paint;
+  transition: box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.header-banner {
+  height: clamp(145px, 17vw, 210px);
+  max-height: none !important;
+  opacity: 1;
+  overflow: hidden;
+  transform-origin: top center;
+  will-change: height, opacity, transform;
+  transition:
+    height 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.header-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.nav-wrap {
+  will-change: min-height;
+  transition: min-height 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand-image {
+  will-change: width, height, opacity;
+  transition:
+    width 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topbar.is-scrolled .header-banner {
+  height: 0 !important;
+  opacity: 0;
+  border-bottom-color: transparent !important;
+}
+
+.topbar.is-scrolled .nav-wrap {
+  min-height: 62px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar,
+  .header-banner,
+  .nav-wrap,
+  .brand-image {
+    transition: none !important;
   }
 }

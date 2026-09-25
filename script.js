@@ -29,6 +29,7 @@ const logoutButton = document.querySelector('[data-logout]');
 const passwordToggleButtons = document.querySelectorAll('[data-toggle-password]');
 const orderStatus = document.getElementById('orderStatus');
 const checkoutSummary = document.getElementById('checkoutSummary');
+const topbar = document.querySelector('.topbar');
 
 const PRICE_PER_BOOK = 299;
 const AUTH_STORAGE_KEY = 'prepverse-user';
@@ -46,6 +47,32 @@ const KIT_CONTENTS = [
   'Linear Algebra & Differential Equations',
   'Electrical Fundamentals Guide'
 ];
+
+let scrollFramePending = false;
+let headerIsScrolled = false;
+const HEADER_COLLAPSE_THRESHOLD = 180;
+const HEADER_EXPAND_THRESHOLD = 24;
+
+function updateHeaderOnScroll() {
+  if (scrollFramePending) return;
+
+  scrollFramePending = true;
+  window.requestAnimationFrame(() => {
+    const scrollY = window.scrollY;
+    const shouldCollapseHeader = headerIsScrolled
+      ? scrollY > HEADER_EXPAND_THRESHOLD
+      : scrollY >= HEADER_COLLAPSE_THRESHOLD;
+
+    if (shouldCollapseHeader !== headerIsScrolled) {
+      headerIsScrolled = shouldCollapseHeader;
+      topbar.classList.toggle('is-scrolled', shouldCollapseHeader);
+    }
+    scrollFramePending = false;
+  });
+}
+
+window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+updateHeaderOnScroll();
 
 const egyptLocations = {
   "Cairo": ["Al Azbakeya", "Bab El Sharia", "Bulaq", "Dar El Salam", "El Khalifa", "El Marg", "El Matareya", "El Musky", "El Nozha", "Hadayek El Kobba", "Heliopolis", "Helwan", "Maadi", "Madinat Nasr", "Mokattam", "Qasr El Nil", "Shorouk", "Tebin", "Zeitoun"],
