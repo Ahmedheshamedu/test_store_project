@@ -3316,6 +3316,14 @@ body {
     }
   }
 
+  /* Keep the full navigation available on phones; it scrolls horizontally when needed. */
+  @media (max-width: 900px) {
+    .topbar .nav {
+      display: flex !important;
+      visibility: visible !important;
+    }
+  }
+
   /* Final mobile overrides must remain after all legacy rules. */
   @media (max-width: 767px) {
     .header-banner {
