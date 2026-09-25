@@ -3316,6 +3316,14 @@ body {
     }
   }
 
+  /* Stable sticky navigation: the banner stays in the document and the nav pins at the viewport top. */
+  .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    align-self: flex-start;
+  }
+
   /* Keep the full navigation available on phones; it scrolls horizontally when needed. */
   @media (max-width: 900px) {
     .topbar .nav {
@@ -3350,7 +3358,7 @@ body {
   /* Mobile layout: keep every section inside the viewport without desktop mode. */
   html,
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   @media (max-width: 767px) {
