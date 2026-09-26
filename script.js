@@ -32,6 +32,7 @@ const orderStatus = document.getElementById('orderStatus');
 const checkoutSummary = document.getElementById('checkoutSummary');
 const mobileMenuToggle = document.querySelector('[data-mobile-menu-toggle]');
 const mainNavigation = document.getElementById('main-navigation');
+const navWrap = document.querySelector('.nav-wrap');
 
 const PRICE_PER_BOOK = 299;
 const AUTH_STORAGE_KEY = 'prepverse-user';
@@ -116,6 +117,7 @@ function renderCart() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   cartCount.textContent = String(totalCount);
   cartButton.classList.toggle('hidden', totalCount === 0);
+  navWrap.classList.toggle('cart-visible', totalCount > 0);
   cartItemsCount.textContent = String(totalCount);
   cartTotal.textContent = `${total} EGP`;
 

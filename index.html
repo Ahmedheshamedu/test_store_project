@@ -18,12 +18,17 @@
     <header class="topbar">
       <div class="container nav-wrap">
         <a class="brand" href="index.html" aria-label="Go to the home page">
-          <span class="brand-mark" aria-hidden="true">M</span>
+          <img class="brand-image" src="assets/images%20MUST%20logo%20(1).jpeg" alt="MUST University logo" />
           <div>
             <span class="brand-name">Must University</span>
             <small>Engineering Book Store</small>
           </div>
         </a>
+
+        <button class="mobile-cart-button cart-button hidden" type="button" data-cart-toggle aria-label="Open shopping cart">
+          <span aria-hidden="true">🛒</span>
+          <span id="cartCount">0</span>
+        </button>
 
         <button class="mobile-menu-toggle" type="button" data-mobile-menu-toggle aria-expanded="false" aria-controls="main-navigation">
           <span></span>
@@ -42,10 +47,6 @@
             <button class="pill secondary" type="button" data-modal="login">Student Login</button>
             <button class="pill secondary" type="button" data-modal="register">Register</button>
             <button class="pill secondary hidden" type="button" data-logout>Log out</button>
-            <button class="pill primary cart-button hidden" type="button" data-cart-toggle aria-label="Open shopping cart">
-              <span aria-hidden="true">🛒</span>
-              <span id="cartCount">0</span>
-            </button>
           </div>
         </nav>
       </div>
