@@ -29,6 +29,8 @@ const logoutButton = document.querySelector('[data-logout]');
 const passwordToggleButtons = document.querySelectorAll('[data-toggle-password]');
 const orderStatus = document.getElementById('orderStatus');
 const checkoutSummary = document.getElementById('checkoutSummary');
+const mobileMenuToggle = document.querySelector('[data-mobile-menu-toggle]');
+const mainNavigation = document.getElementById('main-navigation');
 
 const PRICE_PER_BOOK = 299;
 const AUTH_STORAGE_KEY = 'prepverse-user';
@@ -361,6 +363,27 @@ document.querySelectorAll('[data-modal]').forEach((button) => {
     }
   });
 });
+
+function setMobileMenuState(isOpen) {
+  mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
+  mobileMenuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+  mainNavigation.classList.toggle('mobile-menu-open', isOpen);
+  document.body.classList.toggle('mobile-menu-is-open', isOpen);
+}
+
+mobileMenuToggle.addEventListener('click', () => {
+  setMobileMenuState(mobileMenuToggle.getAttribute('aria-expanded') !== 'true');
+});
+
+mainNavigation.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', () => setMobileMenuState(false));
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') setMobileMenuState(false);
+});
+
+window.matchMedia('(min-width: 768px)').addEventListener('change', () => setMobileMenuState(false));
 
 document.querySelectorAll('[data-close]').forEach((button) => {
   button.addEventListener('click', () => {
