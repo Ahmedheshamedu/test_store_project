@@ -3603,8 +3603,9 @@ body {
   @media (max-width: 767px) {
     .hero {
       min-height: 0;
-      background-size: 100% auto !important;
-      background-position: center top !important;
+      background-image: url("assets/must-mobile-banner.jpg") !important;
+      background-size: cover !important;
+      background-position: center center !important;
       background-repeat: no-repeat !important;
       background-color: #203c4d !important;
     }
