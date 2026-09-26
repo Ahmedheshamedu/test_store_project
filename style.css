@@ -3316,6 +3316,136 @@ body {
     }
   }
 
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .engineering-kit-card .kit-details-toggle {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  .engineering-kit-card .kit-contents {
+    margin-top: 0.9rem;
+  }
+
+  /* Let the Hero background show softly through the featured kit card. */
+  .hero .book-spotlight {
+    background: rgba(255, 253, 248, 0.72) !important;
+    border-color: rgba(216, 208, 194, 0.78) !important;
+    box-shadow: 0 14px 28px rgba(36, 51, 59, 0.14) !important;
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+  }
+
+  /* Final navbar layout: keep the bar clean and place the account actions in the menu. */
+  .topbar .brand-image {
+    display: none !important;
+  }
+
+  .topbar .nav {
+    align-items: center;
+  }
+
+  .topbar .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .topbar .cart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    min-width: 42px;
+    min-height: 40px;
+    padding: 0.55rem 0.7rem !important;
+    font-size: 1rem;
+  }
+
+  .topbar .cart-button #cartCount {
+    font-size: 0.72rem;
+    line-height: 1;
+  }
+
+  @media (max-width: 767px) {
+    .topbar .nav {
+      align-items: stretch;
+    }
+
+    .topbar .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start !important;
+      gap: 0.45rem;
+      padding-top: 0.55rem;
+      border-top: 1px solid rgba(245, 241, 232, 0.14);
+    }
+
+    .topbar .nav-actions .pill {
+      flex: 0 1 auto;
+    }
+
+    .topbar .nav-actions .cart-button {
+      margin-left: auto;
+    }
+  }
+
+  /* Final navbar layout: brand only in the bar; all imagery belongs to the Hero. */
+  .topbar .brand-image {
+    display: none !important;
+  }
+
+  .topbar .nav {
+    align-items: center;
+  }
+
+  .topbar .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .cart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    min-width: 42px;
+    min-height: 40px;
+    padding: 0.55rem 0.7rem !important;
+    font-size: 1rem;
+  }
+
+  .cart-button #cartCount {
+    font-size: 0.72rem;
+    line-height: 1;
+  }
+
+  @media (max-width: 767px) {
+    .topbar .nav {
+      align-items: stretch;
+    }
+
+    .topbar .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start !important;
+      gap: 0.45rem;
+      padding-top: 0.55rem;
+      border-top: 1px solid rgba(245, 241, 232, 0.14);
+    }
+
+    .topbar .nav-actions .pill {
+      flex: 0 1 auto;
+    }
+
+    .topbar .nav-actions .cart-button {
+      margin-left: auto;
+    }
+  }
+
   @media (max-width: 767px) {
     .nav-wrap {
       display: grid !important;

@@ -1,11 +1,12 @@
 const filterButtons = document.querySelectorAll('.filter');
-const productCards = document.querySelectorAll('.book-card');
+const productCards = document.querySelectorAll('.book-card:not(.engineering-kit-card)');
 const productGrid = document.querySelector('.product-grid');
 const sortBooks = document.getElementById('sortBooks');
 const catalogSearch = document.getElementById('catalogSearch');
 const catalogEmpty = document.getElementById('catalogEmpty');
 const cartCount = document.getElementById('cartCount');
-const addToCartButtons = document.querySelectorAll('.book-card .add-cart');
+const cartButton = document.querySelector('[data-cart-toggle]');
+const addToCartButtons = document.querySelectorAll('.book-card:not(.engineering-kit-card) .add-cart');
 const cartDrawer = document.getElementById('cartDrawer');
 const cartItemsContainer = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
@@ -114,6 +115,7 @@ function renderCart() {
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   cartCount.textContent = String(totalCount);
+  cartButton.classList.toggle('hidden', totalCount === 0);
   cartItemsCount.textContent = String(totalCount);
   cartTotal.textContent = `${total} EGP`;
 
@@ -182,7 +184,7 @@ function changeCartQuantity(index, amount) {
 }
 
 function updateProductQuantityControls() {
-  document.querySelectorAll('.book-card').forEach((card) => {
+  document.querySelectorAll('.book-card:not(.engineering-kit-card)').forEach((card) => {
     const title = card.querySelector('h3').textContent.trim();
     const quantity = getCartQuantity(title);
     const quantityValue = card.querySelector('.product-quantity-value');
@@ -331,7 +333,7 @@ document.querySelectorAll('[data-kit-toggle]').forEach((button) => {
   });
 });
 
-document.querySelectorAll('.book-card').forEach((card) => {
+document.querySelectorAll('.book-card:not(.engineering-kit-card)').forEach((card) => {
   const footer = card.querySelector('.book-footer');
   const addButton = card.querySelector('.add-cart');
   const quantityControl = document.createElement('div');

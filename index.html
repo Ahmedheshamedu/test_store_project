@@ -15,13 +15,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="header-banner" aria-hidden="true">
-      <img src="assets/must-banner.jpg" alt="" loading="eager" />
-    </div>
     <header class="topbar">
       <div class="container nav-wrap">
         <a class="brand" href="index.html" aria-label="Go to the home page">
-          <img class="brand-image" src="assets/must-banner.jpg" alt="Must University" loading="eager" />
+          <span class="brand-mark" aria-hidden="true">M</span>
           <div>
             <span class="brand-name">Must University</span>
             <small>Engineering Book Store</small>
@@ -41,16 +38,16 @@
           <a href="#features">Features</a>
           <a href="#reviews">Reviews</a>
           <a href="#offers">Offers</a>
+          <div class="nav-actions">
+            <button class="pill secondary" type="button" data-modal="login">Student Login</button>
+            <button class="pill secondary" type="button" data-modal="register">Register</button>
+            <button class="pill secondary hidden" type="button" data-logout>Log out</button>
+            <button class="pill primary cart-button hidden" type="button" data-cart-toggle aria-label="Open shopping cart">
+              <span aria-hidden="true">🛒</span>
+              <span id="cartCount">0</span>
+            </button>
+          </div>
         </nav>
-
-        <div class="nav-actions">
-          <button class="pill secondary" type="button" data-modal="login">Student Login</button>
-          <button class="pill secondary" type="button" data-modal="register">Register</button>
-          <button class="pill secondary hidden" type="button" data-logout>Log out</button>
-          <button class="pill primary cart-button" type="button" data-cart-toggle>
-            Cart <span id="cartCount">0</span>
-          </button>
-        </div>
       </div>
     </header>
 
@@ -77,39 +74,6 @@
             </ul>
           </div>
 
-          <div class="hero-visual" aria-label="Featured book display">
-            <div class="book-spotlight">
-              <div class="book-cover">
-                <span class="cover-label">Campus Essential</span>
-                <div class="cover-inner">
-                  <h3>Prep</h3>
-                  <p>Engineering<br />Foundation</p>
-                </div>
-              </div>
-              <div class="book-info">
-                <p class="mini-tag">University bundle</p>
-                <h2>Engineering Kit</h2>
-                <div class="price-row">
-                  <span class="new-price">1199 EGP</span>
-                </div>
-                <div class="kit-actions">
-                  <button class="add-cart kit-add-cart" type="button" data-kit-add>Add kit to cart</button>
-                  <button class="button ghost kit-details-toggle" type="button" data-kit-toggle aria-expanded="false">View kit contents</button>
-                </div>
-                <div class="kit-contents hidden" data-kit-contents>
-                  <strong>Kit includes:</strong>
-                  <ul>
-                    <li>Engineering Mathematics Foundation</li>
-                    <li>Applied Physics for Engineers</li>
-                    <li>Engineering Mechanics Essentials</li>
-                    <li>Engineering Drawing &amp; Visualization</li>
-                    <li>Linear Algebra &amp; Differential Equations</li>
-                    <li>Electrical Fundamentals Guide</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -157,6 +121,31 @@
           </div>
 
           <div class="product-grid">
+            <article class="book-card engineering-kit-card" data-category="engineering core" data-popularity="50" data-price="1199">
+              <div class="book-badge">University bundle</div>
+              <h3>Engineering Kit</h3>
+              <p>A complete foundation bundle for engineering students and first-year preparation.</p>
+              <div class="book-meta">
+                <span>6 guides included</span>
+                <span>Best value</span>
+              </div>
+              <div class="book-footer">
+                <strong>1199 EGP</strong>
+                <button class="add-cart kit-add-cart" type="button" data-kit-add>Add kit to cart</button>
+              </div>
+              <button class="button ghost kit-details-toggle" type="button" data-kit-toggle aria-expanded="false">View kit contents</button>
+              <div class="kit-contents hidden" data-kit-contents>
+                <strong>Kit includes:</strong>
+                <ul>
+                  <li>Engineering Mathematics Foundation</li>
+                  <li>Applied Physics for Engineers</li>
+                  <li>Engineering Mechanics Essentials</li>
+                  <li>Engineering Drawing &amp; Visualization</li>
+                  <li>Linear Algebra &amp; Differential Equations</li>
+                  <li>Electrical Fundamentals Guide</li>
+                </ul>
+              </div>
+            </article>
             <article class="book-card" data-category="engineering math" data-popularity="49" data-price="299">
               <div class="book-badge gate">Math</div>
               <h3>Engineering Mathematics Foundation</h3>
