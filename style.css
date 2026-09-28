@@ -3250,6 +3250,126 @@ body {
     will-change: auto !important;
   }
 
+  /* Compact navbar sizing: keep the header readable without taking over the page. */
+  .compact-navbar .nav-wrap {
+    min-height: 64px !important;
+    gap: 0.7rem !important;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+
+  .compact-navbar .brand {
+    gap: 0.55rem !important;
+  }
+
+  .compact-navbar .brand-image {
+    width: 40px !important;
+    height: 40px !important;
+    flex-basis: 40px !important;
+    border-radius: 8px !important;
+  }
+
+  .compact-navbar .brand-name {
+    font-size: 0.9rem !important;
+  }
+
+  .compact-navbar .brand small {
+    font-size: 0.62rem !important;
+  }
+
+  .compact-navbar .nav {
+    gap: 0.85rem !important;
+    font-size: 0.83rem !important;
+  }
+
+  .compact-navbar .nav-actions {
+    gap: 0.4rem !important;
+  }
+
+  .compact-navbar .nav-actions .pill {
+    padding: 0.42rem 0.7rem !important;
+    font-size: 0.72rem !important;
+  }
+
+  .compact-navbar .theme-toggle {
+    min-height: 32px !important;
+    padding: 0.32rem 0.55rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  @media (max-width: 767px) {
+    .compact-navbar .nav-wrap {
+      padding: 6px 0 !important;
+      gap: 0.35rem !important;
+    }
+
+    .compact-navbar .brand-image {
+      width: 38px !important;
+      height: 38px !important;
+      flex-basis: 38px !important;
+    }
+
+    .compact-navbar .brand-name {
+      font-size: 0.82rem !important;
+    }
+
+    .compact-navbar .brand small {
+      font-size: 0.58rem !important;
+    }
+
+    .compact-navbar .mobile-cart-button,
+    .compact-navbar .mobile-menu-toggle {
+      width: 40px !important;
+      min-width: 40px !important;
+      height: 38px !important;
+      min-height: 38px !important;
+    }
+
+    .compact-navbar .mobile-cart-button {
+      padding: 0.3rem !important;
+      font-size: 1rem !important;
+    }
+
+    .compact-navbar .mobile-menu-toggle span:not(.sr-only) {
+      width: 19px !important;
+      height: 2px !important;
+    }
+
+    .compact-navbar > .nav-wrap > .theme-toggle {
+      width: 38px !important;
+      min-width: 38px !important;
+      height: 38px !important;
+      min-height: 38px !important;
+    }
+
+    .compact-navbar .nav a {
+      padding: 0.5rem 0.65rem !important;
+    }
+
+    .compact-navbar .nav-actions .pill {
+      min-height: 36px !important;
+      padding: 0.42rem 0.55rem !important;
+      font-size: 0.72rem !important;
+    }
+  }
+
+  /* Hide the sticky navbar while scrolling down and reveal it while scrolling up. */
+  .compact-navbar {
+    transform: translateY(0);
+    transition: transform 220ms ease, box-shadow 220ms ease !important;
+    will-change: transform;
+  }
+
+  .compact-navbar.navbar-hidden {
+    transform: translateY(-100%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .compact-navbar {
+      transition: none !important;
+    }
+  }
+
   .book-cover {
     background: #203c5a !important;
     color: #f7fafc !important;
@@ -5834,5 +5954,116 @@ body {
 @media (max-width: 767px) {
   .hero {
     background-image: url("assets/must-mobile-banner.jpg") !important;
+  }
+}
+
+/* Final compact navbar layer. */
+.compact-navbar {
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+
+.compact-navbar .nav-wrap {
+  min-height: 64px !important;
+  height: 64px !important;
+  gap: 0.7rem !important;
+  padding: 0.35rem 0 !important;
+}
+
+.compact-navbar .brand {
+  gap: 0.55rem !important;
+}
+
+.compact-navbar .brand-image {
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  border-radius: 8px !important;
+}
+
+.compact-navbar .brand-name {
+  font-size: 0.9rem !important;
+}
+
+.compact-navbar .brand small {
+  font-size: 0.62rem !important;
+}
+
+.compact-navbar .nav {
+  gap: 0.75rem !important;
+  font-size: 0.8rem !important;
+}
+
+.compact-navbar .nav-actions {
+  gap: 0.35rem !important;
+}
+
+.compact-navbar .nav-actions .pill {
+  padding: 0.38rem 0.58rem !important;
+  font-size: 0.68rem !important;
+}
+
+.compact-navbar .theme-toggle {
+  min-height: 32px !important;
+  padding: 0.3rem 0.5rem !important;
+  font-size: 0.68rem !important;
+}
+
+@media (max-width: 767px) {
+  .compact-navbar .nav-wrap {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 6px 0 !important;
+    gap: 0.35rem !important;
+  }
+
+  .compact-navbar .brand-image {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  .compact-navbar .brand-name {
+    font-size: 0.82rem !important;
+  }
+
+  .compact-navbar .brand small {
+    font-size: 0.58rem !important;
+  }
+
+  .compact-navbar .mobile-cart-button,
+  .compact-navbar .mobile-menu-toggle {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .compact-navbar .mobile-cart-button {
+    padding: 0.3rem !important;
+    font-size: 1rem !important;
+  }
+
+  .compact-navbar .mobile-menu-toggle span:not(.sr-only) {
+    width: 19px !important;
+    height: 2px !important;
+  }
+
+  .compact-navbar > .nav-wrap > .theme-toggle {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+  }
+
+  .compact-navbar .nav a {
+    padding: 0.5rem 0.6rem !important;
+  }
+
+  .compact-navbar .nav-actions .pill {
+    min-height: 36px !important;
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.7rem !important;
   }
 }

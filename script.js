@@ -1008,4 +1008,31 @@ function setupScrollReveal() {
   });
 }
 
+function setupAutoHideNavbar() {
+  let lastScrollY = window.scrollY;
+  let frameRequested = false;
+
+  const updateNavbarVisibility = () => {
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY;
+
+    if (currentScrollY <= 12 || scrollDelta < -8) {
+      document.querySelector('.topbar').classList.remove('navbar-hidden');
+    } else if (scrollDelta > 8) {
+      document.querySelector('.topbar').classList.add('navbar-hidden');
+      setMobileMenuState(false);
+    }
+
+    lastScrollY = currentScrollY;
+    frameRequested = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (frameRequested) return;
+    frameRequested = true;
+    window.requestAnimationFrame(updateNavbarVisibility);
+  }, { passive: true });
+}
+
 setupScrollReveal();
+setupAutoHideNavbar();
