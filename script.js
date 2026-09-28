@@ -1,20 +1,25 @@
 const filterButtons = document.querySelectorAll('.filter');
-const productCards = document.querySelectorAll('.book-card:not(.engineering-kit-card)');
 const productGrid = document.querySelector('.product-grid');
 const sortBooks = document.getElementById('sortBooks');
 const catalogSearch = document.getElementById('catalogSearch');
 const catalogEmpty = document.getElementById('catalogEmpty');
 const cartCount = document.getElementById('cartCount');
 const cartButton = document.querySelector('[data-cart-toggle]');
-const addToCartButtons = document.querySelectorAll('.book-card:not(.engineering-kit-card) .add-cart');
 const cartDrawer = document.getElementById('cartDrawer');
 const cartItemsContainer = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
 const cartItemsCount = document.getElementById('cartItemsCount');
+const cartSubtotal = document.getElementById('cartSubtotal');
+const discountRow = document.getElementById('discountRow');
+const discountAmount = document.getElementById('discountAmount');
+const promoCodeInput = document.getElementById('promoCode');
+const applyPromoBtn = document.getElementById('applyPromoBtn');
+const promoMessage = document.getElementById('promoMessage');
 const finishOrderBtn = document.getElementById('finishOrderBtn');
 const authOverlay = document.getElementById('authOverlay');
 const loginModal = document.getElementById('loginModal');
 const registerModal = document.getElementById('registerModal');
+const dashboardModal = document.getElementById('dashboardModal');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
 const checkoutModal = document.getElementById('checkoutModal');
@@ -33,13 +38,98 @@ const checkoutSummary = document.getElementById('checkoutSummary');
 const mobileMenuToggle = document.querySelector('[data-mobile-menu-toggle]');
 const mainNavigation = document.getElementById('main-navigation');
 const navWrap = document.querySelector('.nav-wrap');
+const addBookForm = document.getElementById('addBookForm');
+const addBookFeedback = document.getElementById('addBookFeedback');
+const bookDetailsModal = document.getElementById('bookDetailsModal');
+const bookDetailsTitle = document.getElementById('bookDetailsTitle');
+const bookDetailsCategory = document.getElementById('bookDetailsCategory');
+const bookDetailsPrice = document.getElementById('bookDetailsPrice');
+const bookDetailsDescription = document.getElementById('bookDetailsDescription');
+const bookDetailsPages = document.getElementById('bookDetailsPages');
+const bookDetailsRating = document.getElementById('bookDetailsRating');
+const bookDetailsReviews = document.getElementById('bookDetailsReviews');
+const bookDetailsReview = document.getElementById('bookDetailsReview');
+const bookDetailsAdd = document.getElementById('bookDetailsAdd');
+const bookDetailsWishlist = document.getElementById('bookDetailsWishlist');
+const bookReviewList = document.getElementById('bookReviewList');
+const bookReviewsSummary = document.getElementById('bookReviewsSummary');
+const bookReviewForm = document.getElementById('bookReviewForm');
+const reviewFeedback = document.getElementById('reviewFeedback');
+const themeToggle = document.querySelector('[data-theme-toggle]');
+const toastRegion = document.getElementById('toastRegion');
+const dashboardButton = document.querySelector('[data-dashboard]');
+const dashboardWishlistCount = document.getElementById('dashboardWishlistCount');
+const dashboardCartCount = document.getElementById('dashboardCartCount');
+const dashboardOrdersCount = document.getElementById('dashboardOrdersCount');
+const dashboardOrdersList = document.getElementById('dashboardOrdersList');
+const dashboardStudentLabel = document.getElementById('dashboardStudentLabel');
 
 const PRICE_PER_BOOK = 299;
 const AUTH_STORAGE_KEY = 'prepverse-user';
 const CART_STORAGE_KEY = 'prepverse-cart';
-const originalProductOrder = [...productCards];
+const PROMO_STORAGE_KEY = 'prepverse-promo';
+const BOOKS_STORAGE_KEY = 'prepverse-books';
+const REVIEWS_STORAGE_KEY = 'prepverse-reviews';
+const WISHLIST_STORAGE_KEY = 'prepverse-wishlist';
+const ORDERS_STORAGE_KEY = 'prepverse-orders';
+const getProductCards = () => [...productGrid.querySelectorAll('.book-card:not(.engineering-kit-card)')];
 const storedCart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
 const cart = Array.isArray(storedCart) ? storedCart : [];
+const storedPromo = JSON.parse(localStorage.getItem(PROMO_STORAGE_KEY) || 'null');
+let appliedPromo = storedPromo && typeof storedPromo === 'object' ? storedPromo : null;
+const PROMO_CODES = {
+  MUST10: { label: 'MUST10', type: 'percent', value: 10 },
+  ENG2026: { label: 'ENG2026', type: 'fixed', value: 100 }
+};
+const storedBooks = JSON.parse(localStorage.getItem(BOOKS_STORAGE_KEY) || '[]');
+const savedBooks = Array.isArray(storedBooks) ? storedBooks : [];
+const storedReviews = JSON.parse(localStorage.getItem(REVIEWS_STORAGE_KEY) || '{}');
+const reviewsByBook = storedReviews && typeof storedReviews === 'object' && !Array.isArray(storedReviews) ? storedReviews : {};
+const storedWishlist = JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]');
+const wishlist = Array.isArray(storedWishlist) ? storedWishlist : [];
+let activeBookTitle = '';
+
+const THEME_STORAGE_KEY = 'prepverse-theme';
+const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+const initialTheme = savedTheme === 'dark' || savedTheme === 'light'
+  ? savedTheme
+  : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+function updateThemeButton(theme) {
+  const isDark = theme === 'dark';
+  themeToggle.setAttribute('aria-pressed', String(isDark));
+  themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  themeToggle.querySelector('.theme-toggle-icon').textContent = isDark ? '☀' : '☾';
+  themeToggle.querySelector('.theme-toggle-label').textContent = isDark ? 'Light mode' : 'Dark mode';
+}
+
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+  toast.innerHTML = `<span>${escapeHtml(message)}</span><button type="button" aria-label="Close notification">×</button>`;
+  const closeButton = toast.querySelector('button');
+  let timeoutId = window.setTimeout(() => toast.remove(), 3000);
+  closeButton.addEventListener('click', () => {
+    window.clearTimeout(timeoutId);
+    toast.remove();
+  });
+  toastRegion.appendChild(toast);
+  window.requestAnimationFrame(() => toast.classList.add('is-visible'));
+}
+
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  localStorage.setItem(THEME_STORAGE_KEY, theme);
+  updateThemeButton(theme);
+}
+
+setTheme(initialTheme);
+themeToggle.addEventListener('click', () => {
+  setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+const originalProductOrder = getProductCards();
 const KIT_TITLE = 'Engineering Kit';
 const KIT_PRICE = 1199;
 const KIT_CONTENTS = [
@@ -50,6 +140,164 @@ const KIT_CONTENTS = [
   'Linear Algebra & Differential Equations',
   'Electrical Fundamentals Guide'
 ];
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function formatCategory(category) {
+  return category
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function getBookData(card) {
+  const title = card.querySelector('h3').textContent.trim();
+  const description = card.querySelector('p').textContent.trim();
+  const meta = [...card.querySelectorAll('.book-meta span')].map((item) => item.textContent.trim());
+  const rating = meta.find((item) => item.includes('★')) || '4.7 ★';
+  const category = card.dataset.category.split(' ')[0] || 'engineering';
+  return {
+    title,
+    description,
+    price: Number(card.dataset.price) || PRICE_PER_BOOK,
+    category,
+    pages: card.dataset.pages || `${180 + (title.length * 7) % 120}`,
+    rating,
+    reviews: card.dataset.reviews || `${24 + title.length}`,
+    review: card.dataset.review || 'Students appreciate the clear explanations and practical examples in this title.'
+  };
+}
+
+function isWishlisted(title) {
+  return wishlist.some((book) => book.title === title);
+}
+
+function updateWishlistButton(button, title) {
+  const active = isWishlisted(title);
+  button.classList.toggle('is-wishlisted', active);
+  button.setAttribute('aria-pressed', String(active));
+  button.querySelector('.wishlist-icon').textContent = active ? '♥' : '♡';
+  const label = button.querySelector('.wishlist-label');
+  if (label) label.textContent = active ? 'Remove from wishlist' : 'Add to wishlist';
+  button.setAttribute('aria-label', active ? `Remove ${title} from wishlist` : `Add ${title} to wishlist`);
+}
+
+function toggleWishlist(card) {
+  const book = getBookData(card);
+  const index = wishlist.findIndex((item) => item.title === book.title);
+  if (index >= 0) {
+    wishlist.splice(index, 1);
+  } else {
+    wishlist.push({
+      title: book.title,
+      price: book.price,
+      category: book.category
+    });
+  }
+  localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+  renderDashboardStats();
+  document.querySelectorAll('.wishlist-card-button').forEach((button) => {
+    if (button.closest('.book-card')?.querySelector('h3')?.textContent.trim() === book.title) {
+      updateWishlistButton(button, book.title);
+    }
+  });
+  if (activeBookTitle === book.title) updateWishlistButton(bookDetailsWishlist, book.title);
+}
+
+function addWishlistButton(card) {
+  if (card.querySelector('.wishlist-card-button')) return;
+  const title = card.querySelector('h3').textContent.trim();
+  const button = document.createElement('button');
+  button.className = 'wishlist-button wishlist-card-button';
+  button.type = 'button';
+  button.innerHTML = '<span class="wishlist-icon" aria-hidden="true">♡</span><span class="sr-only">Add to wishlist</span>';
+  button.addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleWishlist(card);
+  });
+  card.prepend(button);
+  updateWishlistButton(button, title);
+}
+
+function getStoredReviews(title) {
+  return Array.isArray(reviewsByBook[title]) ? reviewsByBook[title] : [];
+}
+
+function renderBookReviews(book) {
+  const userReviews = getStoredReviews(book.title);
+  const baseRatingMatch = String(book.rating).match(/[\d.]+/);
+  const baseRating = baseRatingMatch ? Number(baseRatingMatch[0]) : 0;
+  const baseReviewCount = Number(book.reviews) || 0;
+  const totalCount = baseReviewCount + userReviews.length;
+  const average = totalCount
+    ? ((baseRating * baseReviewCount + userReviews.reduce((sum, review) => sum + review.rating, 0)) / totalCount).toFixed(1)
+    : 'New';
+
+  bookReviewsSummary.textContent = `${average} ★ · ${totalCount} review${totalCount === 1 ? '' : 's'}`;
+  bookReviewList.innerHTML = '';
+  const reviews = [
+    ...(baseReviewCount ? [{ reviewer: 'PrepVerse students', rating: baseRating, comment: book.review }] : []),
+    ...userReviews
+  ];
+
+  if (!reviews.length) {
+    bookReviewList.innerHTML = '<p class="empty-reviews">No reviews yet. Be the first to share your experience.</p>';
+    return;
+  }
+
+  reviews.slice().reverse().forEach((review) => {
+    const item = document.createElement('article');
+    item.className = 'review-item';
+    item.innerHTML = `
+      <div class="review-item-header">
+        <strong>${escapeHtml(review.reviewer)}</strong>
+        <span class="review-stars" aria-label="${review.rating} out of 5 stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+      </div>
+      <p>${escapeHtml(review.comment)}</p>
+    `;
+    bookReviewList.appendChild(item);
+  });
+}
+
+function createBookCard(book) {
+  const card = document.createElement('article');
+  card.className = 'book-card user-book-card';
+  card.dataset.category = book.category;
+  card.dataset.price = String(book.price);
+  card.dataset.popularity = '40';
+  card.dataset.pages = String(book.pages);
+  card.dataset.reviews = String(book.reviews);
+  card.dataset.review = book.review;
+  card.innerHTML = `
+    <div class="book-badge core">${escapeHtml(formatCategory(book.category))}</div>
+    <h3>${escapeHtml(book.title)}</h3>
+    <p>${escapeHtml(book.description)}</p>
+    <div class="book-meta">
+      <span>New title</span>
+      <span>${escapeHtml(book.rating || 'New')}</span>
+    </div>
+    <div class="book-footer">
+      <strong>${book.price} EGP</strong>
+      <button class="add-cart" type="button">Add to cart</button>
+    </div>
+  `;
+  addWishlistButton(card);
+  return card;
+}
+
+function renderSavedBooks() {
+  savedBooks.forEach((book) => productGrid.appendChild(createBookCard(book)));
+  productGrid.querySelectorAll('.book-card').forEach(addWishlistButton);
+}
+
+renderSavedBooks();
 
 const egyptLocations = {
   "Cairo": ["Al Azbakeya", "Bab El Sharia", "Bulaq", "Dar El Salam", "El Khalifa", "El Marg", "El Matareya", "El Musky", "El Nozha", "Hadayek El Kobba", "Heliopolis", "Helwan", "Maadi", "Madinat Nasr", "Mokattam", "Qasr El Nil", "Shorouk", "Tebin", "Zeitoun"],
@@ -98,6 +346,7 @@ function updateAuthUI() {
   loginButton.classList.toggle('hidden', isSignedIn);
   registerButton.classList.toggle('hidden', isSignedIn);
   logoutButton.classList.toggle('hidden', !isSignedIn);
+  dashboardButton.textContent = isSignedIn ? 'My dashboard' : 'Student dashboard';
   logoutButton.textContent = isSignedIn ? `Log out (${user.name || user.email})` : 'Log out';
 }
 
@@ -114,14 +363,26 @@ passwordToggleButtons.forEach((button) => {
 function renderCart() {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const { subtotal, discount, total } = getCartTotals();
   cartCount.textContent = String(totalCount);
+  renderDashboardStats();
   cartButton.classList.toggle('hidden', totalCount === 0);
   navWrap.classList.toggle('cart-visible', totalCount > 0);
   cartItemsCount.textContent = String(totalCount);
+  cartSubtotal.textContent = `${subtotal} EGP`;
+  discountRow.classList.toggle('hidden', discount === 0);
+  discountAmount.textContent = `-${discount} EGP`;
   cartTotal.textContent = `${total} EGP`;
 
   if (!cart.length) {
+    appliedPromo = null;
+    localStorage.removeItem(PROMO_STORAGE_KEY);
+    promoCodeInput.value = '';
+    promoMessage.textContent = '';
+    promoMessage.className = 'promo-message';
+    cartSubtotal.textContent = '0 EGP';
+    discountRow.classList.add('hidden');
+    discountAmount.textContent = '-0 EGP';
     cartItemsContainer.innerHTML = '<p class="empty-cart">No books selected yet.</p>';
     finishOrderBtn.disabled = true;
     return;
@@ -170,6 +431,43 @@ function renderCart() {
   updateProductQuantityControls();
 }
 
+function getCartTotals() {
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const discount = appliedPromo
+    ? Math.min(subtotal, appliedPromo.type === 'percent' ? subtotal * appliedPromo.value / 100 : appliedPromo.value)
+    : 0;
+  return { subtotal, discount, total: subtotal - discount };
+}
+
+function applyPromoCode() {
+  const code = promoCodeInput.value.trim().toUpperCase();
+  const promo = PROMO_CODES[code];
+
+  if (!code) {
+    appliedPromo = null;
+    localStorage.removeItem(PROMO_STORAGE_KEY);
+    promoMessage.textContent = 'Enter a promo code first.';
+    promoMessage.className = 'promo-message error';
+  } else if (!promo) {
+    appliedPromo = null;
+    localStorage.removeItem(PROMO_STORAGE_KEY);
+    promoMessage.textContent = 'Invalid promo code.';
+    promoMessage.className = 'promo-message error';
+    showToast('Invalid promo code.', 'error');
+  } else {
+    appliedPromo = promo;
+    localStorage.setItem(PROMO_STORAGE_KEY, JSON.stringify(promo));
+    promoCodeInput.value = promo.label;
+    promoMessage.textContent = promo.type === 'percent'
+      ? `${promo.label} applied successfully: ${promo.value}% off.`
+      : `${promo.label} applied successfully: ${promo.value} EGP off.`;
+    promoMessage.className = 'promo-message success';
+    showToast(`${promo.label} applied successfully.`);
+  }
+
+  renderCart();
+}
+
 function getCartQuantity(title) {
   return cart.find((item) => item.title === title)?.quantity || 0;
 }
@@ -205,6 +503,7 @@ function addBookToCart(card) {
   }
 
   renderCart();
+  showToast(`${title} added to your cart.`);
 }
 
 function addKitToCart() {
@@ -217,9 +516,65 @@ function addKitToCart() {
   renderCart();
 }
 
+function openBookDetails(card) {
+  const book = getBookData(card);
+  activeBookTitle = book.title;
+  bookDetailsTitle.textContent = book.title;
+  bookDetailsCategory.textContent = formatCategory(book.category);
+  bookDetailsPrice.textContent = `${book.price} EGP`;
+  bookDetailsDescription.textContent = book.description;
+  bookDetailsPages.textContent = `${book.pages} pages`;
+  bookDetailsRating.textContent = book.rating;
+  bookDetailsReviews.textContent = `${book.reviews} student reviews`;
+  bookDetailsReview.textContent = `"${book.review}"`;
+  bookDetailsAdd.dataset.cardTitle = book.title;
+  updateWishlistButton(bookDetailsWishlist, book.title);
+  bookReviewForm.reset();
+  reviewFeedback.classList.add('hidden');
+  renderBookReviews(book);
+  openModal(bookDetailsModal);
+}
+
 function openModal(modal) {
   authOverlay.classList.remove('hidden');
   modal.classList.remove('hidden');
+}
+
+function getStoredOrders() {
+  const storedOrders = JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY) || '[]');
+  return Array.isArray(storedOrders) ? storedOrders : [];
+}
+
+function renderDashboardStats() {
+  const wishlist = JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]');
+  const orders = getStoredOrders();
+  const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const user = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
+
+  dashboardWishlistCount.textContent = String(Array.isArray(wishlist) ? wishlist.length : 0);
+  dashboardCartCount.textContent = String(totalCartItems);
+  dashboardOrdersCount.textContent = String(orders.length);
+  dashboardStudentLabel.textContent = user ? `Signed in as ${user.name || user.email}` : 'Local account';
+
+  if (!orders.length) {
+    dashboardOrdersList.innerHTML = '<p class="dashboard-empty">No orders yet. Your completed orders will appear here.</p>';
+    return;
+  }
+
+  dashboardOrdersList.innerHTML = orders
+    .map((order) => `
+      <article class="dashboard-order">
+        <div>
+          <strong>${escapeHtml(order.id)}</strong>
+          <span>${escapeHtml(order.date)} · ${order.itemCount} ${order.itemCount === 1 ? 'book' : 'books'}</span>
+        </div>
+        <div class="dashboard-order-meta">
+          <strong>${order.total} EGP</strong>
+          <span class="order-status-badge">${escapeHtml(order.status)}</span>
+        </div>
+      </article>
+    `)
+    .join('');
 }
 
 function closeModal(modal) {
@@ -254,6 +609,7 @@ function updatePaymentFields() {
 }
 
 function renderCheckoutSummary() {
+  const { subtotal, discount, total } = getCartTotals();
   checkoutSummary.innerHTML = cart
     .map((item) => `
       <div class="checkout-summary-row">
@@ -261,7 +617,11 @@ function renderCheckoutSummary() {
         <strong>${item.price * item.quantity} EGP</strong>
       </div>
     `)
-    .join('');
+    .join('') + `
+      <div class="checkout-summary-row"><span>Subtotal</span><strong>${subtotal} EGP</strong></div>
+      ${discount ? `<div class="checkout-summary-row discount-summary-row"><span>Discount (${appliedPromo.label})</span><strong>-${discount} EGP</strong></div>` : ''}
+      <div class="checkout-summary-row checkout-total-row"><span>Total</span><strong>${total} EGP</strong></div>
+    `;
 }
 
 function toggleCart() {
@@ -275,7 +635,7 @@ function updateCatalogVisibility() {
   const searchTerm = catalogSearch.value.trim().toLowerCase();
   let visibleCount = 0;
 
-  productCards.forEach((card) => {
+  getProductCards().forEach((card) => {
     const categories = card.dataset.category.split(' ');
     const searchableText = `${card.querySelector('h3').textContent} ${card.querySelector('p').textContent} ${card.dataset.category}`.toLowerCase();
     const matchesFilter = selectedFilter === 'all' || categories.includes(selectedFilter);
@@ -315,11 +675,54 @@ sortBooks.addEventListener('change', () => {
   cards.forEach((card) => productGrid.appendChild(card));
 });
 
-addToCartButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const card = button.closest('.book-card');
-    addBookToCart(card);
-  });
+productGrid.addEventListener('click', (event) => {
+  const addButton = event.target.closest('.add-cart');
+  if (addButton) {
+    addBookToCart(addButton.closest('.book-card'));
+    return;
+  }
+
+  if (event.target.closest('button, a, input, select, textarea')) return;
+  const card = event.target.closest('.book-card');
+  if (card) openBookDetails(card);
+});
+
+bookDetailsWishlist.addEventListener('click', () => {
+  const matchingCard = [...productGrid.querySelectorAll('.book-card')].find((item) => item.querySelector('h3').textContent.trim() === activeBookTitle);
+  if (matchingCard) toggleWishlist(matchingCard);
+});
+
+bookDetailsAdd.addEventListener('click', () => {
+  const card = getProductCards().find((item) => item.querySelector('h3').textContent.trim() === bookDetailsAdd.dataset.cardTitle);
+  if (card) addBookToCart(card);
+  closeModal(bookDetailsModal);
+});
+
+bookReviewForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(bookReviewForm);
+  const rating = Number(formData.get('rating'));
+  const reviewer = String(formData.get('reviewer') || '').trim();
+  const comment = String(formData.get('comment') || '').trim();
+
+  if (!activeBookTitle || rating < 1 || rating > 5 || !reviewer || !comment) return;
+
+  const review = {
+    id: `review-${Date.now()}`,
+    reviewer,
+    rating,
+    comment,
+    createdAt: new Date().toISOString()
+  };
+  reviewsByBook[activeBookTitle] = [...getStoredReviews(activeBookTitle), review];
+  localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviewsByBook));
+
+  const card = getProductCards().find((item) => item.querySelector('h3').textContent.trim() === activeBookTitle);
+  if (card) renderBookReviews(getBookData(card));
+  bookReviewForm.reset();
+  reviewFeedback.textContent = 'Your review was published successfully.';
+  reviewFeedback.classList.remove('hidden');
+  showToast('Your review was published successfully.');
 });
 
 document.querySelectorAll('[data-kit-add]').forEach((button) => {
@@ -335,7 +738,8 @@ document.querySelectorAll('[data-kit-toggle]').forEach((button) => {
   });
 });
 
-document.querySelectorAll('.book-card:not(.engineering-kit-card)').forEach((card) => {
+function initializeProductQuantityControl(card) {
+  if (card.classList.contains('engineering-kit-card') || card.querySelector('.product-quantity-control')) return;
   const footer = card.querySelector('.book-footer');
   const addButton = card.querySelector('.add-cart');
   const quantityControl = document.createElement('div');
@@ -354,6 +758,38 @@ document.querySelectorAll('.book-card:not(.engineering-kit-card)').forEach((card
     changeCartQuantity(cart.indexOf(item), -1);
   });
   quantityControl.querySelector('.product-plus').addEventListener('click', () => addBookToCart(card));
+}
+
+getProductCards().forEach(initializeProductQuantityControl);
+productGrid.querySelectorAll('.book-card').forEach(addWishlistButton);
+
+addBookForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(addBookForm);
+  const book = {
+    id: `book-${Date.now()}`,
+    title: String(formData.get('title')).trim(),
+    price: Number(formData.get('price')),
+    category: String(formData.get('category')),
+    description: String(formData.get('description')).trim(),
+    pages: 180 + Math.floor(Math.random() * 121),
+    rating: 'New',
+    reviews: 0,
+    review: 'This is a newly added title. Be the first student to review it.'
+  };
+
+  if (!book.title || !book.price || !book.category || !book.description) return;
+  savedBooks.push(book);
+  localStorage.setItem(BOOKS_STORAGE_KEY, JSON.stringify(savedBooks));
+  const card = createBookCard(book);
+  productGrid.appendChild(card);
+  initializeProductQuantityControl(card);
+  addWishlistButton(card);
+  addBookForm.reset();
+  addBookFeedback.textContent = `${book.title} was added to the catalog.`;
+  addBookFeedback.classList.remove('hidden');
+  showToast(`${book.title} was added to the catalog.`);
+  updateCatalogVisibility();
 });
 
 document.querySelectorAll('[data-modal]').forEach((button) => {
@@ -365,6 +801,11 @@ document.querySelectorAll('[data-modal]').forEach((button) => {
     if (target === 'register') {
       openModal(registerModal);
     }
+  });
+
+  dashboardButton.addEventListener('click', () => {
+    renderDashboardStats();
+    openModal(dashboardModal);
   });
 });
 
@@ -416,6 +857,7 @@ authOverlay.addEventListener('click', () => {
   loginModal.classList.add('hidden');
   registerModal.classList.add('hidden');
   checkoutModal.classList.add('hidden');
+  dashboardModal.classList.add('hidden');
   authOverlay.classList.add('hidden');
 });
 
@@ -476,7 +918,21 @@ checkoutForm.addEventListener('submit', (event) => {
 
   try {
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const { total } = getCartTotals();
+    const orders = getStoredOrders();
+    const orderId = `PV-${Date.now().toString(36).toUpperCase()}`;
+    orders.unshift({
+      id: orderId,
+      status: 'Processing',
+      itemCount,
+      total,
+      date: new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      }).format(new Date())
+    });
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
     checkoutForm.reset();
     updatePaymentFields();
     closeModal(checkoutModal);
@@ -484,13 +940,29 @@ checkoutForm.addEventListener('submit', (event) => {
     authOverlay.classList.add('hidden');
     cart.length = 0;
     renderCart();
+    renderDashboardStats();
     showOrderStatus('Order placed successfully', 'success');
   } catch (error) {
     showOrderStatus('Something went wrong while placing the order. Please try again.', 'error');
   }
 });
 
+applyPromoBtn.addEventListener('click', applyPromoCode);
+promoCodeInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    applyPromoCode();
+  }
+});
+
 renderCart();
+if (appliedPromo) {
+  promoCodeInput.value = appliedPromo.label;
+  promoMessage.textContent = appliedPromo.type === 'percent'
+    ? `${appliedPromo.label} applied successfully: ${appliedPromo.value}% off.`
+    : `${appliedPromo.label} applied successfully: ${appliedPromo.value} EGP off.`;
+  promoMessage.className = 'promo-message success';
+}
 updateAuthUI();
 
 logoutButton.addEventListener('click', () => {

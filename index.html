@@ -37,6 +37,11 @@
           <span class="sr-only">Open navigation menu</span>
         </button>
 
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">
+          <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+          <span class="theme-toggle-label">Dark mode</span>
+        </button>
+
         <nav class="nav" id="main-navigation" aria-label="Main navigation">
           <a href="#catalog">Catalog</a>
           <a href="#discounts">Discounts</a>
@@ -46,6 +51,7 @@
           <div class="nav-actions">
             <button class="pill secondary" type="button" data-modal="login">Student Login</button>
             <button class="pill secondary" type="button" data-modal="register">Register</button>
+            <button class="pill secondary" type="button" data-dashboard>Student dashboard</button>
             <button class="pill secondary hidden" type="button" data-logout>Log out</button>
           </div>
         </nav>
@@ -120,6 +126,43 @@
               </label>
             </div>
           </div>
+
+          <section class="book-manager" aria-labelledby="addBookHeading">
+            <div>
+              <span class="eyebrow">Catalog manager</span>
+              <h3 id="addBookHeading">Add a new textbook</h3>
+              <p>Save a custom title to this browser and make it available in the catalog instantly.</p>
+            </div>
+            <form id="addBookForm" class="add-book-form">
+              <label>
+                Book name
+                <input type="text" name="title" placeholder="e.g. Digital Logic Essentials" required maxlength="120" />
+              </label>
+              <label>
+                Price (EGP)
+                <input type="number" name="price" min="1" step="1" placeholder="299" required />
+              </label>
+              <label>
+                Category
+                <select name="category" required>
+                  <option value="">Choose a category</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="programming">Programming</option>
+                  <option value="web-development">Web Development</option>
+                  <option value="math">Math</option>
+                  <option value="physics">Physics</option>
+                  <option value="core">Core</option>
+                  <option value="design">Design</option>
+                </select>
+              </label>
+              <label class="add-book-description">
+                Description
+                <textarea name="description" rows="3" placeholder="Describe what students will learn..." required maxlength="500"></textarea>
+              </label>
+              <button class="button primary" type="submit">Add to catalog</button>
+            </form>
+            <p class="form-feedback hidden" id="addBookFeedback" role="status"></p>
+          </section>
 
           <div class="product-grid">
             <article class="book-card engineering-kit-card" data-category="engineering core" data-popularity="50" data-price="1199">
@@ -402,6 +445,7 @@
 
     <div class="overlay hidden" id="authOverlay"></div>
     <div class="order-status hidden" id="orderStatus" role="status" aria-live="polite"></div>
+    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
 
     <div class="modal hidden" id="loginModal" aria-modal="true" role="dialog">
       <div class="modal-header">
@@ -429,6 +473,42 @@
         <h3>Create Account</h3>
         <button class="close-modal" type="button" data-close="registerModal">×</button>
       </div>
+
+      <div class="modal hidden dashboard-modal" id="dashboardModal" aria-modal="true" role="dialog" aria-labelledby="dashboardTitle">
+        <div class="modal-header">
+          <div>
+            <span class="dashboard-eyebrow">Student space</span>
+            <h3 id="dashboardTitle">Student mini-dashboard</h3>
+          </div>
+          <button class="close-modal" type="button" data-close="dashboardModal" aria-label="Close dashboard">×</button>
+        </div>
+        <div class="dashboard-stats" aria-live="polite">
+          <article class="dashboard-stat">
+            <span class="dashboard-stat-icon" aria-hidden="true">♡</span>
+            <strong id="dashboardWishlistCount">0</strong>
+            <span>Saved books</span>
+          </article>
+          <article class="dashboard-stat">
+            <span class="dashboard-stat-icon" aria-hidden="true">🛒</span>
+            <strong id="dashboardCartCount">0</strong>
+            <span>Books in cart</span>
+          </article>
+          <article class="dashboard-stat">
+            <span class="dashboard-stat-icon" aria-hidden="true">✓</span>
+            <strong id="dashboardOrdersCount">0</strong>
+            <span>Previous orders</span>
+          </article>
+        </div>
+        <section class="dashboard-orders" aria-labelledby="dashboardOrdersTitle">
+          <div class="dashboard-section-heading">
+            <h4 id="dashboardOrdersTitle">Order history</h4>
+            <span id="dashboardStudentLabel">Local account</span>
+          </div>
+          <div id="dashboardOrdersList" class="dashboard-orders-list">
+            <p class="dashboard-empty">No orders yet. Your completed orders will appear here.</p>
+          </div>
+        </section>
+      </div>
       <form id="registerForm" class="auth-form">
         <label>
           Full name
@@ -447,6 +527,59 @@
         </label>
         <button type="submit" class="primary-submit">Register</button>
       </form>
+    </div>
+
+    <div class="modal hidden book-details-modal" id="bookDetailsModal" aria-modal="true" role="dialog" aria-labelledby="bookDetailsTitle">
+      <div class="modal-header">
+        <h3 id="bookDetailsTitle">Book details</h3>
+        <button class="close-modal" type="button" data-close="bookDetailsModal" aria-label="Close book details">×</button>
+      </div>
+      <div class="book-details-content">
+        <div class="book-details-badge" id="bookDetailsCategory"></div>
+        <p class="book-details-price" id="bookDetailsPrice"></p>
+        <p id="bookDetailsDescription"></p>
+        <dl class="book-details-facts">
+          <div><dt>Estimated pages</dt><dd id="bookDetailsPages"></dd></div>
+          <div><dt>Student rating</dt><dd id="bookDetailsRating"></dd></div>
+          <div><dt>Reviews</dt><dd id="bookDetailsReviews"></dd></div>
+        </dl>
+        <blockquote id="bookDetailsReview"></blockquote>
+        <button class="wishlist-button wishlist-details-button" type="button" id="bookDetailsWishlist" aria-pressed="false">
+          <span class="wishlist-icon" aria-hidden="true">♡</span>
+          <span class="wishlist-label">Add to wishlist</span>
+        </button>
+        <section class="book-reviews" aria-labelledby="bookReviewsHeading">
+          <div class="book-reviews-heading">
+            <h4 id="bookReviewsHeading">Student reviews</h4>
+            <span id="bookReviewsSummary"></span>
+          </div>
+          <div class="review-list" id="bookReviewList"></div>
+          <form class="review-form" id="bookReviewForm">
+            <h4>Share your experience</h4>
+            <fieldset class="star-picker">
+              <legend>Your rating</legend>
+              <div class="star-options" role="radiogroup" aria-label="Choose a rating from one to five stars">
+                <label><input type="radio" name="rating" value="1" required /><span aria-hidden="true">★</span><span class="sr-only">1 star</span></label>
+                <label><input type="radio" name="rating" value="2" /><span aria-hidden="true">★</span><span class="sr-only">2 stars</span></label>
+                <label><input type="radio" name="rating" value="3" /><span aria-hidden="true">★</span><span class="sr-only">3 stars</span></label>
+                <label><input type="radio" name="rating" value="4" /><span aria-hidden="true">★</span><span class="sr-only">4 stars</span></label>
+                <label><input type="radio" name="rating" value="5" /><span aria-hidden="true">★</span><span class="sr-only">5 stars</span></label>
+              </div>
+            </fieldset>
+            <label>
+              Your name
+              <input type="text" name="reviewer" placeholder="Enter your name" maxlength="80" required />
+            </label>
+            <label>
+              Your review
+              <textarea name="comment" rows="3" placeholder="What did you think of this book?" maxlength="500" required></textarea>
+            </label>
+            <button class="button primary" type="submit">Publish review</button>
+            <p class="form-feedback hidden" id="reviewFeedback" role="status"></p>
+          </form>
+        </section>
+        <button class="button primary" type="button" id="bookDetailsAdd">Add to cart</button>
+      </div>
     </div>
 
     <div class="modal hidden" id="checkoutModal" aria-modal="true" role="dialog">
@@ -549,6 +682,22 @@
           <strong id="cartItemsCount">0</strong>
         </div>
         <div class="summary-row">
+          <span>Total</span>
+          <strong id="cartSubtotal">0 EGP</strong>
+        </div>
+        <div class="promo-box">
+          <label for="promoCode">Promo code</label>
+          <div class="promo-input-row">
+            <input id="promoCode" type="text" placeholder="MUST10" autocomplete="off" maxlength="20" />
+            <button id="applyPromoBtn" type="button">Apply</button>
+          </div>
+          <p id="promoMessage" class="promo-message" role="status" aria-live="polite"></p>
+        </div>
+        <div class="summary-row discount-row hidden" id="discountRow">
+          <span>Discount</span>
+          <strong id="discountAmount">-0 EGP</strong>
+        </div>
+        <div class="summary-row total-row">
           <span>Total</span>
           <strong id="cartTotal">0 EGP</strong>
         </div>
