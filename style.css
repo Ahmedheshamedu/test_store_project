@@ -6072,3 +6072,7 @@ body {
 .order-status {
   z-index: 9999 !important;
 }
+
+.order-status {
+  z-index: 2147483647 !important;
+}

@@ -59,6 +59,7 @@ const bookReviewForm = document.getElementById('bookReviewForm');
 const reviewFeedback = document.getElementById('reviewFeedback');
 const themeToggle = document.querySelector('[data-theme-toggle]');
 const toastRegion = document.getElementById('toastRegion');
+let orderStatusTimeout;
 const dashboardButton = document.querySelector('[data-dashboard]');
 const dashboardWishlistCount = document.getElementById('dashboardWishlistCount');
 const dashboardCartCount = document.getElementById('dashboardCartCount');
@@ -588,11 +589,14 @@ function closeModal(modal) {
 }
 
 function showOrderStatus(message, type) {
+  clearTimeout(orderStatusTimeout);
   orderStatus.textContent = message;
   orderStatus.className = `order-status ${type}`;
+  orderStatusTimeout = setTimeout(hideOrderStatus, 4000);
 }
 
 function hideOrderStatus() {
+  clearTimeout(orderStatusTimeout);
   orderStatus.className = 'order-status hidden';
   orderStatus.textContent = '';
 }
