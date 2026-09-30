@@ -6067,3 +6067,8 @@ body {
     font-size: 0.7rem !important;
   }
 }
+
+/* Order feedback must remain visible above the sticky navigation. */
+.order-status {
+  z-index: 9999 !important;
+}
