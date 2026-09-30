@@ -465,6 +465,7 @@
           </span>
         </label>
         <button type="submit" class="primary-submit">Login</button>
+        <p class="form-feedback hidden" id="loginFeedback" role="alert" aria-live="polite"></p>
       </form>
     </div>
 
@@ -472,42 +473,6 @@
       <div class="modal-header">
         <h3>Create Account</h3>
         <button class="close-modal" type="button" data-close="registerModal">×</button>
-      </div>
-
-      <div class="modal hidden dashboard-modal" id="dashboardModal" aria-modal="true" role="dialog" aria-labelledby="dashboardTitle">
-        <div class="modal-header">
-          <div>
-            <span class="dashboard-eyebrow">Student space</span>
-            <h3 id="dashboardTitle">Student mini-dashboard</h3>
-          </div>
-          <button class="close-modal" type="button" data-close="dashboardModal" aria-label="Close dashboard">×</button>
-        </div>
-        <div class="dashboard-stats" aria-live="polite">
-          <article class="dashboard-stat">
-            <span class="dashboard-stat-icon" aria-hidden="true">♡</span>
-            <strong id="dashboardWishlistCount">0</strong>
-            <span>Saved books</span>
-          </article>
-          <article class="dashboard-stat">
-            <span class="dashboard-stat-icon" aria-hidden="true">🛒</span>
-            <strong id="dashboardCartCount">0</strong>
-            <span>Books in cart</span>
-          </article>
-          <article class="dashboard-stat">
-            <span class="dashboard-stat-icon" aria-hidden="true">✓</span>
-            <strong id="dashboardOrdersCount">0</strong>
-            <span>Previous orders</span>
-          </article>
-        </div>
-        <section class="dashboard-orders" aria-labelledby="dashboardOrdersTitle">
-          <div class="dashboard-section-heading">
-            <h4 id="dashboardOrdersTitle">Order history</h4>
-            <span id="dashboardStudentLabel">Local account</span>
-          </div>
-          <div id="dashboardOrdersList" class="dashboard-orders-list">
-            <p class="dashboard-empty">No orders yet. Your completed orders will appear here.</p>
-          </div>
-        </section>
       </div>
       <form id="registerForm" class="auth-form">
         <label>
@@ -526,7 +491,44 @@
           </span>
         </label>
         <button type="submit" class="primary-submit">Register</button>
+        <p class="form-feedback hidden" id="registerFeedback" role="alert" aria-live="polite"></p>
       </form>
+    </div>
+
+    <div class="modal hidden dashboard-modal" id="dashboardModal" aria-modal="true" role="dialog" aria-labelledby="dashboardTitle">
+      <div class="modal-header">
+        <div>
+          <span class="dashboard-eyebrow">Student space</span>
+          <h3 id="dashboardTitle">Student mini-dashboard</h3>
+        </div>
+        <button class="close-modal" type="button" data-close="dashboardModal" aria-label="Close dashboard">×</button>
+      </div>
+      <div class="dashboard-stats" aria-live="polite">
+        <article class="dashboard-stat">
+          <span class="dashboard-stat-icon" aria-hidden="true">♡</span>
+          <strong id="dashboardWishlistCount">0</strong>
+          <span>Saved books</span>
+        </article>
+        <article class="dashboard-stat">
+          <span class="dashboard-stat-icon" aria-hidden="true">🛒</span>
+          <strong id="dashboardCartCount">0</strong>
+          <span>Books in cart</span>
+        </article>
+        <article class="dashboard-stat">
+          <span class="dashboard-stat-icon" aria-hidden="true">✓</span>
+          <strong id="dashboardOrdersCount">0</strong>
+          <span>Previous orders</span>
+        </article>
+      </div>
+      <section class="dashboard-orders" aria-labelledby="dashboardOrdersTitle">
+        <div class="dashboard-section-heading">
+          <h4 id="dashboardOrdersTitle">Order history</h4>
+          <span id="dashboardStudentLabel">Local account</span>
+        </div>
+        <div id="dashboardOrdersList" class="dashboard-orders-list">
+          <p class="dashboard-empty">No orders yet. Your completed orders will appear here.</p>
+        </div>
+      </section>
     </div>
 
     <div class="modal hidden book-details-modal" id="bookDetailsModal" aria-modal="true" role="dialog" aria-labelledby="bookDetailsTitle">

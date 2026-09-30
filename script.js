@@ -22,6 +22,8 @@ const registerModal = document.getElementById('registerModal');
 const dashboardModal = document.getElementById('dashboardModal');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
+const loginFeedback = document.getElementById('loginFeedback');
+const registerFeedback = document.getElementById('registerFeedback');
 const checkoutModal = document.getElementById('checkoutModal');
 const checkoutForm = document.getElementById('checkoutForm');
 const cardFields = document.getElementById('cardFields');
@@ -66,6 +68,7 @@ const dashboardStudentLabel = document.getElementById('dashboardStudentLabel');
 
 const PRICE_PER_BOOK = 299;
 const AUTH_STORAGE_KEY = 'prepverse-user';
+const USERS_STORAGE_KEY = 'prepverse-users';
 const CART_STORAGE_KEY = 'prepverse-cart';
 const PROMO_STORAGE_KEY = 'prepverse-promo';
 const BOOKS_STORAGE_KEY = 'prepverse-books';
@@ -678,7 +681,11 @@ sortBooks.addEventListener('change', () => {
 productGrid.addEventListener('click', (event) => {
   const addButton = event.target.closest('.add-cart');
   if (addButton) {
-    addBookToCart(addButton.closest('.book-card'));
+    if (addButton.hasAttribute('data-kit-add')) {
+      addKitToCart();
+    } else {
+      addBookToCart(addButton.closest('.book-card'));
+    }
     return;
   }
 
@@ -723,10 +730,6 @@ bookReviewForm.addEventListener('submit', (event) => {
   reviewFeedback.textContent = 'Your review was published successfully.';
   reviewFeedback.classList.remove('hidden');
   showToast('Your review was published successfully.');
-});
-
-document.querySelectorAll('[data-kit-add]').forEach((button) => {
-  button.addEventListener('click', addKitToCart);
 });
 
 document.querySelectorAll('[data-kit-toggle]').forEach((button) => {
@@ -817,6 +820,7 @@ function setMobileMenuState(isOpen) {
 }
 
 mobileMenuToggle.addEventListener('click', () => {
+  document.querySelector('.topbar').classList.remove('navbar-hidden');
   setMobileMenuState(mobileMenuToggle.getAttribute('aria-expanded') !== 'true');
 });
 
@@ -863,8 +867,22 @@ authOverlay.addEventListener('click', () => {
 
 loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const email = loginForm.querySelector('input[type="email"]').value;
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ email }));
+  const email = loginForm.querySelector('input[name="email"]').value.trim().toLowerCase();
+  const password = loginForm.querySelector('input[name="password"]').value;
+  const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
+  const user = Array.isArray(users)
+    ? users.find((account) => account.email === email && account.password === password)
+    : null;
+
+  if (!user) {
+    loginFeedback.textContent = 'Incorrect email or password.';
+    loginFeedback.className = 'form-feedback error';
+    return;
+  }
+
+  loginFeedback.textContent = '';
+  loginFeedback.className = 'form-feedback hidden';
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ name: user.name, email: user.email }));
   updateAuthUI();
   const button = loginForm.querySelector('button[type="submit"]');
   button.textContent = `Welcome back, ${email}`;
@@ -877,9 +895,23 @@ loginForm.addEventListener('submit', (event) => {
 
 registerForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const name = registerForm.querySelector('input[name="name"]').value;
-  const email = registerForm.querySelector('input[name="email"]').value;
+  const name = registerForm.querySelector('input[name="name"]').value.trim();
+  const email = registerForm.querySelector('input[name="email"]').value.trim().toLowerCase();
+  const password = registerForm.querySelector('input[name="password"]').value;
+  const users = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || '[]');
+  const storedUsers = Array.isArray(users) ? users : [];
+
+  if (storedUsers.some((account) => account.email === email)) {
+    registerFeedback.textContent = 'An account with this email already exists.';
+    registerFeedback.className = 'form-feedback error';
+    return;
+  }
+
+  storedUsers.push({ name, email, password });
+  localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(storedUsers));
   localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ name, email }));
+  registerFeedback.textContent = '';
+  registerFeedback.className = 'form-feedback hidden';
   updateAuthUI();
   const button = registerForm.querySelector('button[type="submit"]');
   button.textContent = `Welcome, ${name}`;
@@ -1015,12 +1047,20 @@ function setupAutoHideNavbar() {
   const updateNavbarVisibility = () => {
     const currentScrollY = window.scrollY;
     const scrollDelta = currentScrollY - lastScrollY;
+    const topbar = document.querySelector('.topbar');
+    const menuIsOpen = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+
+    if (menuIsOpen) {
+      topbar.classList.remove('navbar-hidden');
+      lastScrollY = currentScrollY;
+      frameRequested = false;
+      return;
+    }
 
     if (currentScrollY <= 12 || scrollDelta < -8) {
-      document.querySelector('.topbar').classList.remove('navbar-hidden');
+      topbar.classList.remove('navbar-hidden');
     } else if (scrollDelta > 8) {
-      document.querySelector('.topbar').classList.add('navbar-hidden');
-      setMobileMenuState(false);
+      topbar.classList.add('navbar-hidden');
     }
 
     lastScrollY = currentScrollY;
